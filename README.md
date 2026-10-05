@@ -160,4 +160,4 @@ FluentPomodoro/
 │   ├─ Palette.Dark.xaml      # 深色主题令牌
 │   └─ Controls.xaml          # Fluent 控件样式（按钮/开关/滑块/下拉/滚动条/分段控件）
 ├─ Assets/app.ico             # 由 tools\make-icon.ps1 生成的多尺寸图标
-└─ tools/                     # 构建与验收脚本（图标/素材、截图、6 套端到端测试）
+└─ tools/                     # 构建与验收脚本（图标/素材）
