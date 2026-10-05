@@ -10,9 +10,6 @@ Windows 11 上运行的 C# / WPF 番茄钟桌面程序，采用微软 Fluent Des
 ## 1. 快速开始
 
 ```powershell
-# 直接运行已发布产物
-.\dist\FluentPomodoro.exe
-
 # 从源码构建单文件 EXE（生成图标 → 还原 → 发布到 .\dist）
 pwsh -NoProfile -File .\build.ps1
 ```
