@@ -1,0 +1,58 @@
+image hues measured by me: red=2.87 deg  blue=215.46 deg
+predicted accent (light+red)  = RGB(173,61,55)
+predicted accent (light+blue) = RGB(55,104,173)
+predicted accent (dark+red)   = RGB(224,96,90)
+[PASS] main window present (baseline) :: hwnd=1836722 title='25:00 · 专注 · 微软风格番茄钟'
+baseline plain strip: modal=243,243,243 avg=(243,243,243) lum=0.9529
+baseline 开始专注 accent: modal=0,120,212 avg=(23.6,132.3,216)
+[PASS] no image -> background strip is the plain light theme backdrop (243,243,243) :: modal=243,243,243
+[PASS] no image -> primary button uses the system accent, not an image hue :: BtnPlay modal=0,120,212
+[PASS] 选择图片 opens the native 选择背景图片 dialog and it accepts the typed path :: invoked=True dialog title='选择背景图片' foreground=True closed after Enter=True
+[PASS] settings.json records the image chosen through the dialog :: BackgroundImagePath='C:\Users\Administrator\Documents\deepseek-harness\default-workspace\FluentPomodoro\artifacts\test-assets\bg-red.png'
+light + red image: strip modal=229,177,174 avg=(229.2,176.9,174.1) lum=0.7364
+light + red image: 开始专注 button modal=173,61,55 avg=(180.6,78.7,73.5)
+[PASS] red image -> background strip becomes red-dominant :: strip modal RGB(229,177,174)
+[PASS] red image -> the 开始专注 button becomes red-dominant :: BtnPlay modal RGB(173,61,55)
+[PASS] red image -> button accent equals the value my own extraction formula predicts :: observed RGB(173,61,55) predicted RGB(173,61,55) from hue 2.87 deg
+[PASS] red image -> accent really changed away from the system accent :: before RGB(0,120,212) after RGB(173,61,55)
+[PASS] after exit settings.json still holds BackgroundImagePath :: BackgroundImagePath='C:\Users\Administrator\Documents\deepseek-harness\default-workspace\FluentPomodoro\artifacts\test-assets\bg-red.png'
+[PASS] after exit BackgroundOpacity / BackgroundRotateMinutes / BackgroundUseImageAccent intact :: opacity=0.95 rotate=0 useImageAccent=True
+[PASS] after restart the same red background is applied :: strip modal RGB(229,177,174) avg=(229.2,176.9,174.1)
+[PASS] after restart the image accent is applied again :: BtnPlay modal RGB(173,61,55)
+[PASS] 选择图片 also accepts the blue image :: dialog='选择背景图片' closed=True
+light + blue image: strip modal=171,195,231 avg=(170.9,194.9,229.9)
+light + blue image: 开始专注 button modal=55,104,173 avg=(73.5,117.8,180.6)
+[PASS] blue image -> background strip becomes blue-dominant :: strip modal RGB(171,195,231)
+[PASS] blue image -> the 开始专注 button becomes blue-dominant :: BtnPlay modal RGB(55,104,173)
+[PASS] blue image -> button accent equals my predicted value and differs from the system accent :: observed RGB(55,104,173) predicted RGB(55,104,173); system accent was RGB(0,120,212)
+[PASS] opacity slider accepts 0.15 through its real RangeValue peer :: SetValue(0.15) ok=True
+[PASS] the opacity label follows the slider (15%) :: LblBgOpacity='15%'
+[PASS] opacity slider accepts 1.0 :: SetValue(1.0) ok=True label='100%'
+opacity 0.15 strip avg=(237.9,241.4,247) lum=0.9454 | opacity 1.0 strip avg=(166.4,192,228.8) lum=0.7419 | sum|d|=139.1
+[PASS] the opacity slider visibly changes the image strength :: sum |delta| over RGB = 139.1
+[PASS] opacity 1.0 shows a stronger (darker) image than 0.15 :: lum(1.0)=0.7419 < lum(0.15)=0.9454
+[PASS] opacity persisted as 1 :: BackgroundOpacity=1
+[PASS] the 清除 button clears the background :: clicked=True TxtBgInfo='未设置背景图片（可选一张图片，或选一个文件夹在其中的图片间轮换）'
+[PASS] clearing restores the plain theme background (243,243,243, identical to baseline) :: strip modal after clear=243,243,243, baseline=243,243,243
+[PASS] clearing also reverts the accent to the system accent :: BtnPlay after clear=RGB(0,120,212); baseline=RGB(0,120,212)
+[PASS] clearing persists empty path/folder to settings.json :: path='' folder=''
+[PASS] the 选择文件夹 button opens a native folder picker :: invoked=True dialog hwnd=2295568 title='选择背景图片文件夹'
+folder picker title='选择背景图片文件夹'; TxtBgInfo after typing the path = '当前：bg-blue.png | 文件夹内共 3 张 · 不自动轮换'; settings BackgroundFolder='C:\Users\Administrator\Documents\deepseek-harness\default-workspace\FluentPomodoro\artifacts\test-assets'
+[PASS] the folder picker accepted the typed folder path (folder chosen through the UI) :: TxtBgInfo='当前：bg-blue.png | 文件夹内共 3 张 · 不自动轮换'
+folder mode TxtBgInfo before Space = '当前：bg-blue.png | 文件夹内共 3 张 · 不自动轮换'
+[PASS] folder mode reports the number of images in the folder (3) :: TxtBgInfo='当前：bg-blue.png | 文件夹内共 3 张 · 不自动轮换'
+folder mode before Space: strip modal=167,194,233 avg=(166.4,192,228.8); accent modal=55,104,173
+folder mode after Space : strip modal=233,174,171 avg=(228.1,172.9,170.1); accent modal=173,61,55; title='24:56 · 专注 · 微软风格番茄钟'
+[PASS] pressing Space really started the focus phase (so the rotate trigger ran) :: foreground=True title='24:56 · 专注 · 微软风格番茄钟'
+[PASS] rotate-on-focus-start changes the background image :: background strip avg delta = 139.5 (before (166.4,192,228.8) -> after (228.1,172.9,170.1))
+[PASS] the accent follows the new image too :: accent before RGB(55,104,173) after RGB(173,61,55)
+dark + red image: strip modal=76,28,25 avg=(72.8,26.9,24.6) lum=0.1432
+dark + red image: 开始专注 button modal=224,96,90 avg=(226.9,110.5,105.3)
+   light + red image was: strip avg=(229.2,176.9,174.1) lum=0.7364, accent RGB(173,61,55)
+[PASS] dark theme + red image: the window is still dark (strip luminance far below the light variant) :: dark strip lum=0.1432 vs light strip lum=0.7364 (same image, same opacity)
+[PASS] dark theme + red image: the accent is still red-dominant :: BtnPlay modal RGB(224,96,90)
+[PASS] dark theme + red image: accent equals my predicted dark-theme value (adapted, not copied verbatim) :: observed RGB(224,96,90) predicted RGB(224,96,90); light+red was RGB(173,61,55)
+[PASS] the accent differs between light and dark themes (per-theme adaptation) :: dark RGB(224,96,90) vs light RGB(173,61,55)
+==============================================================================
+TOTAL 37 / 37 passed, 0 failed
+==============================================================================

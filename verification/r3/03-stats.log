@@ -1,0 +1,54 @@
+harness date = 2026-10-05 (Monday) 00:03:09
+palette (Themes\Palette.Light.xaml): H5=#0B3B22  H4=#216E39  H3=#30A14E  H2=#40C463  H1=#9BE9A8  H0=#EBEDF0
+[PASS] main window present :: hwnd=395212
+[PASS] Ctrl+I opens the 专注统计 window :: stats hwnd=919268 rect={"H":680,"W":1000,"Y":176,"X":460}
+[PASS] app calendar day identified from the 今日 card (within 1 day of my clock) :: ValToday='3 小时 42 分' -> app today = 2026-10-05; my clock = 2026-10-05
+app today=2026-10-05 (Monday)  monday=2026-10-05  gridStart=2025-10-06  visible cells=365
+[PASS] statistics window picked up the rewritten history.json :: TxtRange='共 16 天有记录' expected='共 16 天有记录'
+my expectations: today='30 分钟'/1pom  week='30 分钟'  month='1 小时 25 分'  total='26 小时 22 分'/47pom  streak=3  best='8 小时 20 分' on 2025-10-06
+my expected level counts: L0=351 L1=3 L2=4 L3=2 L4=3 L5=2
+[PASS] title-bar 统计 button activates the window (real Click handler) :: BtnStats InvokePattern invoked=True
+[PASS] the contribution matrix was located in the capture :: measured heat-pixel bbox=(72,369)-(915,477) -> matrix origin (42,349) drawn size 844x109
+[PASS] the matrix is drawn as exactly 53 weekly columns :: column runs with heat pixels = 53
+[PASS] the matrix is drawn as exactly 7 weekday rows :: row runs with heat pixels = 7
+[PASS] drawn cell block is 53x16-3 wide and 7x16-3 tall :: drawn 844x109; 53 columns x 16px pitch - 3px gap = 845, 7 rows x 16 - 3 = 109
+today cell should be week 52 row 0 -> window-relative (904,369)
+sampled 365 cells (expected 365); unclassified=0
+[PASS] every sampled cell centre is exactly one of the 6 palette colours :: unclassified=0 
+[PASS] sampled cell count equals the number of days in the 53-week window :: sampled=365 expected=365
+[PASS] all 6 level colours are rendered in the matrix :: L0=351 L1=3 L2=4 L3=2 L4=3 L5=2
+[PASS] cells at level 0 (#EBEDF0) == my own bucket count for that boundary set :: rendered=351 expected=351
+[PASS] cells at level 1 (#9BE9A8) == my own bucket count for that boundary set :: rendered=3 expected=3
+[PASS] cells at level 2 (#40C463) == my own bucket count for that boundary set :: rendered=4 expected=4
+[PASS] cells at level 3 (#30A14E) == my own bucket count for that boundary set :: rendered=2 expected=2
+[PASS] cells at level 4 (#216E39) == my own bucket count for that boundary set :: rendered=3 expected=3
+[PASS] cells at level 5 (#0B3B22) == my own bucket count for that boundary set :: rendered=2 expected=2
+[PASS] independent whole-region pixel count for level 0 is non-zero :: pixels=53703
+[PASS] independent whole-region pixel count for level 1 is non-zero :: pixels=459
+[PASS] independent whole-region pixel count for level 2 is non-zero :: pixels=576
+[PASS] independent whole-region pixel count for level 3 is non-zero :: pixels=306
+[PASS] independent whole-region pixel count for level 4 is non-zero :: pixels=459
+[PASS] independent whole-region pixel count for level 5 is non-zero :: pixels=306
+hover cell = grid week 4 row 1 -> 2025-11-04; tooltip='2025-11-04 周二\n专注 3 小时 19 分 · 6 个番茄'
+[PASS] tooltip reports exactly the date of the hovered cell :: expected date '2025-11-04 周二' tooltip='2025-11-04 周二\n专注 3 小时 19 分 · 6 个番茄'
+[PASS] tooltip focus minutes match history.json for that day :: expected '专注 3 小时 19 分' tooltip='2025-11-04 周二\n专注 3 小时 19 分 · 6 个番茄'
+[PASS] tooltip pomodoro count matches history.json for that day :: expected '6 个番茄' tooltip='2025-11-04 周二\n专注 3 小时 19 分 · 6 个番茄'
+[PASS] summary field ValToday equals my own computation from history.json :: rendered='30 分钟' expected='30 分钟'
+[PASS] summary field ValWeek equals my own computation from history.json :: rendered='30 分钟' expected='30 分钟'
+[PASS] summary field ValMonth equals my own computation from history.json :: rendered='1 小时 25 分' expected='1 小时 25 分'
+[PASS] summary field ValTotal equals my own computation from history.json :: rendered='26 小时 22 分' expected='26 小时 22 分'
+[PASS] summary field ValStreak equals my own computation from history.json :: rendered='3' expected='3'
+[PASS] summary field ValBest equals my own computation from history.json :: rendered='8 小时 20 分' expected='8 小时 20 分'
+[PASS] summary field SubToday equals my own computation from history.json :: rendered='1 个番茄' expected='1 个番茄'
+[PASS] summary field SubTotal equals my own computation from history.json :: rendered='47 个番茄' expected='47 个番茄'
+[PASS] summary field SubBest equals my own computation from history.json :: rendered='2025-10-06' expected='2025-10-06'
+[PASS] summary field TxtRange equals my own computation from history.json :: rendered='共 16 天有记录' expected='共 16 天有记录'
+[PASS] 导出 CSV opens a native save dialog :: invoked=True dialog=1050402 title='导出专注统计'
+[PASS] CSV file written to the path I typed into the dialog :: path=C:\Users\Administrator\Documents\deepseek-harness\default-workspace\FluentPomodoro\verification\r3\r3-export.csv
+[PASS] CSV rows == history.json days (+1 header row) :: csv=17 expected=17 header='日期,专注分钟,番茄数'
+[PASS] every CSV row matches my own derivation :: all 17 lines identical
+[PASS] Esc closes the statistics window :: stats hwnd after Esc=0
+[PASS] Ctrl+I reopens the statistics window after it was closed :: hwnd=984804
+==============================================================================
+TOTAL 43 / 43 passed, 0 failed
+==============================================================================

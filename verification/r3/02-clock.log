@@ -1,0 +1,27 @@
+[PASS] main window present :: hwnd=1247004 title='25:00 · 专注 · 微软风格番茄钟'
+[PASS] TxtClock is exposed in the UI tree :: rect={"X":901,"W":119,"H":43,"Y":581} name='23:58:28'
+[PASS] clock text matches HH:mm:ss :: name='23:58:28'
+[PASS] clock text advances every second :: read1='23:58:28' read2='23:58:30' read3='23:58:31'
+[PASS] clock is horizontally centred on the ring axis :: clock centre X=960.5  big-timer centre X=960.5
+[PASS] clock sits below the round indicator and inside the window :: clock Y=581..623  round Y=513  window bottom=906
+[PASS] timer is not running (title shows full 25:00) :: title='25:00 · 专注 · 微软风格番茄钟'
+clock ON  : diff pixels=1664  bbox=(262,467)-(379,489)
+expected clock region (window-relative, +2px slack): (259,453)-(382,500)
+[PASS] clock ON: the two captures differ :: diff pixels=1664
+[PASS] clock ON: every changed pixel lies inside the clock region :: diff bbox=(262,467)-(379,489) vs allowed=(259,453)-(382,500)
+[PASS] clock ON: everything outside the clock region is pixel-identical (same bbox constraint) :: changed pixels outside the 1-px-expanded clock rect = 0
+clock crop saved: r3-b2-clock-on-zoom.png  (127x51 source, x6)
+[PASS] settings panel shows 显示当前时间 = On before toggling :: TglClock ToggleState=On
+[PASS] TglClock toggles Off via its real automation peer :: clicked=True state=Off
+[PASS] clock disappears from the UI tree when disabled :: TxtClock rect after toggle = null
+  (clock text before toggle='23:58:34', after toggle='<not found>')
+clock OFF : diff pixels=0  bbox=(2147483647,2147483647)-(-1,-1)
+[PASS] clock OFF: the two captures are pixel-identical :: diff pixels=0
+[PASS] clock OFF changes the rendered window (clock really removed) :: diff between clock-on and clock-off captures = 25222 pixels
+[PASS] exits cleanly :: HasExited=True
+[PASS] ShowClock=false persisted to settings.json after exit :: ShowClock=False
+[PASS] after restart with saved ShowClock=false the clock is absent :: rect=null name='<not found>'
+[PASS] restart (ShowClock=false): capture pair still pixel-identical :: diff pixels=0
+==============================================================================
+TOTAL 19 / 19 passed, 0 failed
+==============================================================================

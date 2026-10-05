@@ -1,0 +1,47 @@
+harness date = 2026-10-05 00:06:57
+baseline history.json:
+{
+  "Days": {
+    "2026-10-04": {
+      "Pomodoros": 1,
+      "Minutes": 25
+    },
+    "2026-10-03": {
+      "Pomodoros": 1,
+      "Minutes": 30
+    },
+    "2026-10-02": {
+      "Pomodoros": 1,
+      "Minutes": 15
+    },
+    "2026-09-30": {
+      "Pomodoros": 2,
+      "Minutes": 60
+    }
+  }
+}
+baseline settings: CompletedToday=0 FocusMinutesToday=0 TotalCompleted=7 StreakDays=3 LastCompletedDate=2026-10-04
+[PASS] main window present :: hwnd=853724 title='01:00 · 专注 · 微软风格番茄钟'
+[PASS] timer shows 01:00 (FocusMinutes=1 took effect) :: title='01:00 · 专注 · 微软风格番茄钟'
+[PASS] app owns the keyboard focus before the keystroke :: foreground==main : True
+[PASS] Space starts the focus phase :: title='00:59 · 专注 · 微软风格番茄钟'
+[PASS] the 1-minute focus phase runs to completion and advances to the break :: after 58.8s title='05:00 · 短休息 · 微软风格番茄钟'
+[PASS] history.json gained today with exactly +1 minute :: today Minutes=1
+[PASS] history.json gained today with exactly +1 pomodoro :: today Pomodoros=1
+[PASS] the pre-existing day is unchanged (25 min / 1 pomodoro) :: yesterday = 25 min / 1 pom
+[PASS] history.json now holds exactly 5 days :: days = 2026-10-04, 2026-10-03, 2026-10-02, 2026-09-30, 2026-10-05
+[PASS] no second increment while the break is running (counted exactly once) :: 12s later today = 1 min / 1 pom
+[PASS] settings: CompletedToday incremented to exactly 1 :: CompletedToday=1
+[PASS] settings: FocusMinutesToday incremented to exactly 1 :: FocusMinutesToday=1
+[PASS] settings: TotalCompleted 7 -> 8 :: TotalCompleted=8
+[PASS] settings: StreakDays 3 -> 4 (yesterday was the last completion day) :: StreakDays=4
+[PASS] settings: LastCompletedDate == today :: LastCompletedDate=2026-10-05
+[PASS] statistics window opens after the focus run :: hwnd=460712
+[PASS] 今日 card reads exactly 1 分钟 :: ValToday='1 分钟'
+[PASS] 今日 card sub-label reads 1 个番茄 :: SubToday='1 个番茄'
+[PASS] 累计专注 card = 1+25+30+15+60 = 131 分钟 :: ValTotal='2 小时 11 分' expected='2 小时 11 分'
+[PASS] 最佳一天 card = 60 分钟 on the day 5 days ago :: ValBest='1 小时' expected='1 小时'
+[PASS] 连续专注 card = 4 天 (history-derived, 4 consecutive days) :: ValStreak='4' expected='4'
+==============================================================================
+TOTAL 21 / 21 passed, 0 failed
+==============================================================================

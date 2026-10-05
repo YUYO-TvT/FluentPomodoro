@@ -1,0 +1,477 @@
+<Window x:Class="FluentPomodoro.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:FluentPomodoro.Controls"
+        Title="微软风格番茄钟"
+        Width="640" Height="780" MinWidth="480" MinHeight="560"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None" ResizeMode="CanResize" AllowsTransparency="False"
+        Background="{DynamicResource WindowBackdropBrush}"
+        FontFamily="{DynamicResource AppFontFamily}"
+        FontSize="14"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="ClearType"
+        UseLayoutRounding="True"
+        SnapsToDevicePixels="True"
+        PreviewKeyDown="OnPreviewKeyDown"
+        PreviewMouseMove="OnPreviewMouseMove"
+        SizeChanged="OnWindowSizeChanged"
+        Closing="OnWindowClosing">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="40" ResizeBorderThickness="6" CornerRadius="8"
+                      GlassFrameThickness="0" UseAeroCaptionButtons="False" />
+    </WindowChrome.WindowChrome>
+
+    <Border x:Name="RootBorder" CornerRadius="8" BorderThickness="1"
+            BorderBrush="{DynamicResource StrokeBrush}"
+            Background="{DynamicResource WindowOverlayBrush}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!-- 背景图片层（可选，位于所有内容之下；图片模式下用遮罩保证文字可读） -->
+            <Image x:Name="BackgroundImage" Grid.RowSpan="3" Stretch="UniformToFill" Opacity="0"
+                   Visibility="Collapsed" IsHitTestVisible="False" />
+            <Border x:Name="ImageScrim" Grid.RowSpan="3" Visibility="Collapsed"
+                    Background="{DynamicResource ImageScrimBrush}" IsHitTestVisible="False" />
+
+            <!-- ===================== 标题栏 ===================== -->
+            <Grid x:Name="TitleBar" Grid.Row="0" Height="40" Background="Transparent">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="14,0,0,0" VerticalAlignment="Center">
+                    <TextBlock Text="&#xE916;" FontFamily="{DynamicResource AppIconFontFamily}" FontSize="14"
+                               Foreground="{DynamicResource AccentBrush}" VerticalAlignment="Center" />
+                    <TextBlock Text="番茄钟" FontSize="12.5" Margin="9,0,0,0" VerticalAlignment="Center"
+                               Foreground="{DynamicResource TextSecondaryBrush}" />
+                    <TextBlock x:Name="TxtTitlePhase" Text="专注" FontSize="12.5" Margin="8,0,0,0"
+                               VerticalAlignment="Center" Foreground="{DynamicResource TextTertiaryBrush}" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center"
+                            WindowChrome.IsHitTestVisibleInChrome="True">
+                    <Button x:Name="BtnStats" Style="{StaticResource TitleBarButton}" ToolTip="专注统计 (Ctrl+I)"
+                            Click="OnOpenStats">
+                        <Grid Height="16" Width="16">
+                            <Rectangle Width="3" Height="6" RadiusX="1" RadiusY="1" VerticalAlignment="Bottom"
+                                       HorizontalAlignment="Left" Margin="1,0,0,1"
+                                       Fill="{DynamicResource TextPrimaryBrush}" />
+                            <Rectangle Width="3" Height="10" RadiusX="1" RadiusY="1" VerticalAlignment="Bottom"
+                                       HorizontalAlignment="Center" Margin="0,0,0,1"
+                                       Fill="{DynamicResource TextPrimaryBrush}" />
+                            <Rectangle Width="3" Height="14" RadiusX="1" RadiusY="1" VerticalAlignment="Bottom"
+                                       HorizontalAlignment="Right" Margin="0,0,1,1"
+                                       Fill="{DynamicResource AccentBrush}" />
+                        </Grid>
+                    </Button>
+                    <Button x:Name="BtnNoise" Style="{StaticResource TitleBarButton}" Content="&#xE767;"
+                            ToolTip="白噪音 播放 / 暂停" Click="OnToggleNoise" />
+                    <Button x:Name="BtnSettingsTop" Style="{StaticResource TitleBarButton}" Content="&#xE713;"
+                            ToolTip="设置 (Ctrl+,)" Click="OnOpenSettings" />
+                    <Button x:Name="BtnMin" Style="{StaticResource TitleBarButton}" Content="&#xE921;"
+                            ToolTip="最小化" Click="OnMinimize" />
+                    <Button x:Name="BtnBig" Style="{StaticResource TitleBarButton}" Content="&#xE740;"
+                            ToolTip="强制大屏 / 还原 (F11)" Click="OnToggleBigScreen" />
+                    <Button x:Name="BtnClose" Style="{StaticResource CloseTitleBarButton}" Content="&#xE8BB;"
+                            ToolTip="关闭 (Ctrl+Shift+Q 可强制退出)" Click="OnCloseClick" />
+                </StackPanel>
+            </Grid>
+
+            <!-- ===================== 主区域 ===================== -->
+            <Grid x:Name="MainArea" Grid.Row="1" Margin="24,2,24,2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Grid x:Name="RingHost" Grid.Row="0" MinHeight="220">
+                    <controls:ProgressRing x:Name="Ring" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                           TrackBrush="{DynamicResource TrackBrush}"
+                                           IndicatorBrush="{DynamicResource PhaseFocusBrush}"
+                                           GlowBrush="{DynamicResource AccentGlowBrush}"
+                                           RingThickness="16" />
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock x:Name="TxtPhase" Text="专注" HorizontalAlignment="Center" FontSize="15"
+                                   FontWeight="SemiBold" Foreground="{DynamicResource TextSecondaryBrush}" />
+                        <TextBlock x:Name="TxtTime" Text="25:00" HorizontalAlignment="Center" FontSize="64"
+                                   FontWeight="SemiBold" FontFamily="{DynamicResource AppDisplayFontFamily}"
+                                   Foreground="{DynamicResource TextPrimaryBrush}" Margin="0,-4,0,0" />
+                        <TextBlock x:Name="TxtRound" Text="第 1 / 4 个番茄" HorizontalAlignment="Center"
+                                   FontSize="12.5" Foreground="{DynamicResource TextTertiaryBrush}"
+                                   Margin="0,2,0,0" />
+                        <StackPanel x:Name="RoundDots" Orientation="Horizontal" HorizontalAlignment="Center"
+                                    Margin="0,12,0,0" />
+                        <TextBlock x:Name="TxtClock" Text="" HorizontalAlignment="Center" FontSize="14"
+                                   FontFamily="{DynamicResource AppDisplayFontFamily}"
+                                   Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,12,0,0" />
+                    </StackPanel>
+                </Grid>
+
+                <TextBlock x:Name="TxtStatus" Grid.Row="1" HorizontalAlignment="Center" Margin="0,10,0,8"
+                           FontSize="12.5" TextAlignment="Center" TextWrapping="Wrap"
+                           Foreground="{DynamicResource TextTertiaryBrush}"
+                           Text="空格 开始/暂停 · R 重置 · S 跳过 · F11 强制大屏 · Esc 退出大屏" />
+
+                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,8">
+                    <Button x:Name="BtnPlay" Style="{StaticResource PrimaryActionButton}" Focusable="False"
+                            Click="OnToggleStartPause">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock x:Name="PlayGlyph" Text="&#xE768;" FontFamily="{DynamicResource AppIconFontFamily}"
+                                       FontSize="15" VerticalAlignment="Center" Margin="0,0,10,0" />
+                            <TextBlock x:Name="PlayLabel" Text="开始专注" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="BtnReset" Style="{StaticResource SecondaryButton}" Content="重置"
+                            Margin="12,0,0,0" Padding="20,13" Focusable="False" Click="OnReset" />
+                    <Button x:Name="BtnSkip" Style="{StaticResource SecondaryButton}" Content="跳过"
+                            Margin="10,0,0,0" Padding="20,13" Focusable="False" Click="OnSkip" />
+                </StackPanel>
+            </Grid>
+
+            <!-- ===================== 底部状态栏 ===================== -->
+            <Grid x:Name="BottomBar" Grid.Row="2" Height="48" Margin="16,0,16,12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" CornerRadius="7" Padding="2" VerticalAlignment="Center"
+                        Background="{DynamicResource LayerBrush}"
+                        BorderBrush="{DynamicResource StrokeBrush}" BorderThickness="1">
+                    <StackPanel Orientation="Horizontal">
+                        <RadioButton x:Name="RbWindow" Style="{StaticResource SegmentedRadio}" Content="窗口"
+                                     Tag="None" GroupName="BigScreen" Focusable="False" Checked="OnModeChecked" />
+                        <RadioButton x:Name="RbFull" Style="{StaticResource SegmentedRadio}" Content="全屏"
+                                     Tag="Full" GroupName="BigScreen" Focusable="False" Checked="OnModeChecked" />
+                        <RadioButton x:Name="RbMega" Style="{StaticResource SegmentedRadio}" Content="巨幕跨屏"
+                                     Tag="Mega" GroupName="BigScreen" Focusable="False" Checked="OnModeChecked" />
+                    </StackPanel>
+                </Border>
+
+                <TextBlock x:Name="TxtStats" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+                           FontSize="12.5" Foreground="{DynamicResource TextTertiaryBrush}" TextTrimming="CharacterEllipsis"
+                           Margin="10,0" />
+
+                <Button x:Name="BtnSettings" Grid.Column="2" Style="{StaticResource SubtleButton}" Focusable="False"
+                        Click="OnOpenSettings" Padding="12,7">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="&#xE713;" FontFamily="{DynamicResource AppIconFontFamily}" FontSize="13"
+                                   VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Text="设置" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button>
+            </Grid>
+
+            <!-- ===================== 设置面板 ===================== -->
+            <Grid x:Name="SettingsOverlay" Grid.RowSpan="3" Visibility="Collapsed">
+                <Border x:Name="Scrim" Background="#59000000" MouseLeftButtonDown="OnScrimClick" />
+                <Border x:Name="SettingsPanel" Width="440" HorizontalAlignment="Right"
+                        Background="{DynamicResource SurfaceBrush}"
+                        BorderBrush="{DynamicResource StrokeBrush}" BorderThickness="1,0,1,0"
+                        CornerRadius="8,0,0,8">
+                    <Border.RenderTransform>
+                        <TranslateTransform x:Name="PanelSlide" X="440" />
+                    </Border.RenderTransform>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0" Margin="20,14,10,6">
+                            <TextBlock Text="设置" FontSize="19" FontWeight="SemiBold"
+                                       Foreground="{DynamicResource TextPrimaryBrush}" VerticalAlignment="Center" />
+                            <Button Style="{StaticResource TitleBarButton}" Content="&#xE8BB;" HorizontalAlignment="Right"
+                                    ToolTip="关闭 (Esc)" Click="OnCloseSettings" />
+                        </Grid>
+
+                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="20,4,10,20">
+                            <StackPanel>
+
+                                <TextBlock Style="{StaticResource SectionHeaderText}" Text="计时" />
+                                <StackPanel Margin="0,0,0,14">
+                                    <DockPanel>
+                                        <TextBlock x:Name="LblFocus" DockPanel.Dock="Right" Style="{StaticResource SecondaryText}"
+                                                   Text="25 分钟" VerticalAlignment="Center" />
+                                        <TextBlock Style="{StaticResource LabelText}" Text="专注时长" />
+                                    </DockPanel>
+                                    <Slider x:Name="SldFocus" Style="{StaticResource FluentSlider}" Minimum="1" Maximum="120"
+                                            TickFrequency="1" IsSnapToTickEnabled="True" ValueChanged="OnDurationChanged" />
+                                    <DockPanel Margin="0,6,0,0">
+                                        <TextBlock x:Name="LblShort" DockPanel.Dock="Right" Style="{StaticResource SecondaryText}"
+                                                   Text="5 分钟" VerticalAlignment="Center" />
+                                        <TextBlock Style="{StaticResource LabelText}" Text="短休息" />
+                                    </DockPanel>
+                                    <Slider x:Name="SldShort" Style="{StaticResource FluentSlider}" Minimum="1" Maximum="30"
+                                            TickFrequency="1" IsSnapToTickEnabled="True" ValueChanged="OnDurationChanged" />
+                                    <DockPanel Margin="0,6,0,0">
+                                        <TextBlock x:Name="LblLong" DockPanel.Dock="Right" Style="{StaticResource SecondaryText}"
+                                                   Text="15 分钟" VerticalAlignment="Center" />
+                                        <TextBlock Style="{StaticResource LabelText}" Text="长休息" />
+                                    </DockPanel>
+                                    <Slider x:Name="SldLong" Style="{StaticResource FluentSlider}" Minimum="5" Maximum="60"
+                                            TickFrequency="1" IsSnapToTickEnabled="True" ValueChanged="OnDurationChanged" />
+                                    <DockPanel Margin="0,6,0,0">
+                                        <TextBlock x:Name="LblInterval" DockPanel.Dock="Right" Style="{StaticResource SecondaryText}"
+                                                   Text="4 个" VerticalAlignment="Center" />
+                                        <TextBlock Style="{StaticResource LabelText}" Text="长休息间隔（每几个番茄）" />
+                                    </DockPanel>
+                                    <Slider x:Name="SldInterval" Style="{StaticResource FluentSlider}" Minimum="2" Maximum="12"
+                                            TickFrequency="1" IsSnapToTickEnabled="True" ValueChanged="OnDurationChanged" />
+                                </StackPanel>
+
+                                <Border Height="1" Background="{DynamicResource DividerBrush}" Margin="0,0,0,16" />
+
+                                <TextBlock Style="{StaticResource SectionHeaderText}" Text="显示" />
+                                <StackPanel Margin="0,0,0,16">
+                                    <CheckBox x:Name="TglClock" Style="{StaticResource FluentToggleSwitch}"
+                                              Content="显示当前时间（时钟）" Margin="0,0,0,14"
+                                              Checked="OnSettingToggled" Unchecked="OnSettingToggled" />
+                                    <CheckBox x:Name="TglClockFocusOnly" Style="{StaticResource FluentToggleSwitch}"
+                                              Content="仅在专注阶段显示（休息时隐藏）" Margin="0,0,0,10"
+                                              Checked="OnSettingToggled" Unchecked="OnSettingToggled" />
+                                    <TextBlock Style="{StaticResource CaptionText}" TextWrapping="Wrap"
+                                               Text="在圆环中显示系统当前时间，每秒刷新，大屏时会自动放大；开启第二项后只在专注阶段出现。" />
+                                </StackPanel>
+
+                                <Border Height="1" Background="{DynamicResource DividerBrush}" Margin="0,0,0,16" />
+
+                                <TextBlock Style="{StaticResource SectionHeaderText}" Text="背景图片" />
+                                <StackPanel Margin="0,0,0,16">
+                                    <TextBlock x:Name="TxtBgInfo" Style="{StaticResource SecondaryText}" TextWrapping="Wrap"
+                                               Margin="0,0,0,10" Text="未设置背景图片" />
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                        <Button Style="{StaticResource SecondaryButton}" Content="选择图片"
+                                                Focusable="False" Click="OnPickBackgroundImage" />
+                                        <Button Style="{StaticResource SecondaryButton}" Content="选择文件夹"
+                                                Margin="8,0,0,0" Focusable="False" Click="OnPickBackgroundFolder" />
+                                        <Button Style="{StaticResource SubtleButton}" Content="换一张"
+                                                Margin="8,0,0,0" Focusable="False" Click="OnNextBackground" />
+                                        <Button Style="{StaticResource SubtleButton}" Content="清除"
+                                                Margin="8,0,0,0" Focusable="False" Click="OnClearBackground" />
+                                    </StackPanel>
+                                    <DockPanel Margin="0,6,0,0">
+                                        <TextBlock x:Name="LblBgOpacity" DockPanel.Dock="Right" Style="{StaticResource SecondaryText}"
+                                                   Text="95%" VerticalAlignment="Center" />
+                                        <TextBlock Style="{StaticResource LabelText}" Text="图片不透明度" />
+                                    </DockPanel>
+                                    <Slider x:Name="SldBgOpacity" Style="{StaticResource FluentSlider}" Minimum="0.15"
+                                            Maximum="1" TickFrequency="0.05" IsSnapToTickEnabled="True"
+                                            ValueChanged="OnBackgroundOpacityChanged" />
+                                    <DockPanel Margin="0,6,0,0">
+                                        <ComboBox x:Name="CmbBgRotate" DockPanel.Dock="Right" Width="150"
+                                                  Style="{StaticResource FluentComboBox}" SelectionChanged="OnBackgroundRotateChanged">
+                                            <ComboBoxItem Content="不轮换" />
+                                            <ComboBoxItem Content="每 5 分钟" />
+                                            <ComboBoxItem Content="每 15 分钟" />
+                                            <ComboBoxItem Content="每 30 分钟" />
+                                            <ComboBoxItem Content="每 1 小时" />
+                                            <ComboBoxItem Content="每天" />
+                                        </ComboBox>
+                                        <TextBlock Style="{StaticResource LabelText}" Text="周期更换" />
+                                    </DockPanel>
+                                    <CheckBox x:Name="TglBgOnFocus" Style="{StaticResource FluentToggleSwitch}"
+                                              Content="每次开始专注时换一张" Margin="0,12,0,0"
+                                              Checked="OnBackgroundOptionChanged" Unchecked="OnBackgroundOptionChanged" />
+                                    <CheckBox x:Name="TglBgAccent" Style="{StaticResource FluentToggleSwitch}"
+                                              Content="用图片主色调作为主题色" Margin="0,14,0,0"
+                                              Checked="OnBackgroundOptionChanged" Unchecked="OnBackgroundOptionChanged" />
+                                    <TextBlock Style="{StaticResource CaptionText}" TextWrapping="Wrap" Margin="0,10,0,0"
+                                               Text="文件夹模式会在其中随机轮换；主题色从图片主色调中提取，浅色/深色主题各自调整明度以保证可读。" />
+                                </StackPanel>
+
+                                <Border Height="1" Background="{DynamicResource DividerBrush}" Margin="0,0,0,16" />
+
+                                <TextBlock Style="{StaticResource SectionHeaderText}" Text="白噪音（导入本地音频）" />
+                                <StackPanel Margin="0,0,0,16">
+                                    <TextBlock x:Name="TxtNoiseInfo" Style="{StaticResource SecondaryText}" TextWrapping="Wrap"
+                                               Margin="0,0,0,10" Text="尚未导入音频文件" />
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                        <Button Style="{StaticResource SecondaryButton}" Content="添加音频"
+                                                Focusable="False" Click="OnAddNoiseTracks" />
+                                        <Button Style="{StaticResource SubtleButton}" Content="清空列表"
+                                                Margin="8,0,0,0" Focusable="False" Click="OnClearNoiseTracks" />
+                                    </StackPanel>
+                                    <Border Style="{StaticResource FluentCard}" Padding="10" Margin="0,0,0,12"
+                                            Background="{DynamicResource SurfaceAltBrush}">
+                                        <ItemsControl x:Name="NoiseList" MaxHeight="150">
+                                            <ItemsControl.Template>
+                                                <ControlTemplate TargetType="ItemsControl">
+                                                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                                        <ItemsPresenter />
+                                                    </ScrollViewer>
+                                                </ControlTemplate>
+                                            </ItemsControl.Template>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid Margin="0,1">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="{Binding}" FontSize="12.5" TextTrimming="CharacterEllipsis"
+                                                                   VerticalAlignment="Center"
+                                                                   Foreground="{DynamicResource TextSecondaryBrush}" />
+                                                        <Button Grid.Column="1" Style="{StaticResource TitleBarButton}"
+                                                                Content="&#xE8BB;" Width="28" Height="24" FontSize="9"
+                                                                ToolTip="移除" Tag="{Binding}" Click="OnRemoveNoiseTrack" />
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </Border>
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
+                                        <Button Style="{StaticResource SecondaryButton}" Content="播放 / 暂停"
+                                                Focusable="False" Click="OnToggleNoise" />
+                                        <Button Style="{StaticResource SubtleButton}" Content="下一首"
+                                                Margin="8,0,0,0" Focusable="False" Click="OnNextNoise" />
+                                    </StackPanel>
+                                    <DockPanel Margin="0,6,0,0">
+                                        <TextBlock x:Name="LblNoiseVolume" DockPanel.Dock="Right" Style="{StaticResource SecondaryText}"
+                                                   Text="70%" VerticalAlignment="Center" />
+                                        <TextBlock Style="{StaticResource LabelText}" Text="音量" />
+                                    </DockPanel>
+                                    <Slider x:Name="SldNoiseVolume" Style="{StaticResource FluentSlider}" Minimum="0"
+                                            Maximum="100" TickFrequency="1" IsSnapToTickEnabled="True"
+                                            ValueChanged="OnNoiseVolumeChanged" />
+                                    <CheckBox x:Name="TglNoiseAuto" Style="{StaticResource FluentToggleSwitch}"
+                                              Content="开始专注时自动播放" Margin="0,14,0,0"
+                                              Checked="OnSettingToggled" Unchecked="OnSettingToggled" />
+                                    <CheckBox x:Name="TglNoiseOnlyFocus" Style="{StaticResource FluentToggleSwitch}"
+                                              Content="仅在专注阶段播放（暂停/休息时停）" Margin="0,14,0,0"
+                                              Checked="OnSettingToggled" Unchecked="OnSettingToggled" />
+                                    <CheckBox x:Name="TglNoiseShuffle" Style="{StaticResource FluentToggleSwitch}"
+                                              Content="随机播放" Margin="0,14,0,0"
+                                              Checked="OnSettingToggled" Unchecked="OnSettingToggled" />
+                                    <TextBlock Style="{StaticResource CaptionText}" TextWrapping="Wrap" Margin="0,10,0,0"
+                                               Text="支持系统可解码的音频（mp3 / wav / wma / m4a 等）；单曲自动循环，多曲顺序或随机。请使用你有权使用的音频文件。" />
+                                </StackPanel>
+
+                                <Border Height="1" Background="{DynamicResource DividerBrush}" Margin="0,0,0,16" />
+
+                                <TextBlock Style="{StaticResource SectionHeaderText}" Text="行为" />
+                                <StackPanel Margin="0,0,0,16">
+                                    <CheckBox x:Name="TglAutoStart" Style="{StaticResource FluentToggleSwitch}"
+                                              Content="自动开始下一阶段" Margin="0,0,0,14"
+                                              Checked="OnSettingToggled" Unchecked="OnSettingToggled" />
+                                    <CheckBox x:Name="TglSound" Style="{StaticResource FluentToggleSwitch}"
+                                              Content="阶段结束提示音" Margin="0,0,0,14"
+                                              Checked="OnSettingToggled" Unchecked="OnSettingToggled" />
+                                    <Button Style="{StaticResource SubtleButton}" Content="试听提示音"
+                                            HorizontalAlignment="Left" Margin="0,0,0,14" Padding="12,6"
+                                            Focusable="False" Click="OnPreviewSound" />
+                                    <CheckBox x:Name="TglNoSleep" Style="{StaticResource FluentToggleSwitch}"
+                                              Content="专注时阻止系统休眠（睡眠 / 休眠）" Margin="0,0,0,14"
+                                              Checked="OnSettingToggled" Unchecked="OnSettingToggled" />
+                                    <CheckBox x:Name="TglKeepAwake" Style="{StaticResource FluentToggleSwitch}"
+                                              Content="专注时同时保持屏幕常亮" Margin="0,0,0,10"
+                                              Checked="OnSettingToggled" Unchecked="OnSettingToggled" />
+                                    <TextBlock Style="{StaticResource CaptionText}" TextWrapping="Wrap" Margin="0,0,0,14"
+                                               Text="阻止休眠只让系统保持运行（显示器仍可按系统设置熄灭）；「保持屏幕常亮」会在其之上额外点亮显示器。仅在专注阶段计时进行中生效，暂停或进入休息即恢复系统正常休眠策略。" />
+                                    <CheckBox x:Name="TglNotify" Style="{StaticResource FluentToggleSwitch}"
+                                              Content="阶段结束闪烁任务栏提醒" Margin="0,0,0,14"
+                                              Checked="OnSettingToggled" Unchecked="OnSettingToggled" />
+                                    <CheckBox x:Name="TglTopmost" Style="{StaticResource FluentToggleSwitch}"
+                                              Content="窗口始终置顶" Margin="0,0,0,14"
+                                              Checked="OnSettingToggled" Unchecked="OnSettingToggled" />
+                                    <CheckBox x:Name="TglLock" Style="{StaticResource FluentToggleSwitch}"
+                                              Content="专注锁定（拦截最小化 / 关闭）"
+                                              Checked="OnSettingToggled" Unchecked="OnSettingToggled" />
+                                </StackPanel>
+
+                                <Border Height="1" Background="{DynamicResource DividerBrush}" Margin="0,0,0,16" />
+
+                                <TextBlock Style="{StaticResource SectionHeaderText}" Text="强制大屏" />
+                                <StackPanel Margin="0,0,0,16">
+                                    <CheckBox x:Name="TglAutoBig" Style="{StaticResource FluentToggleSwitch}"
+                                              Content="开始专注时自动进入大屏" Margin="0,0,0,14"
+                                              Checked="OnSettingToggled" Unchecked="OnSettingToggled" />
+                                    <CheckBox x:Name="TglBigTopmost" Style="{StaticResource FluentToggleSwitch}"
+                                              Content="大屏时强制置顶并覆盖任务栏" Margin="0,0,0,14"
+                                              Checked="OnSettingToggled" Unchecked="OnSettingToggled" />
+                                    <TextBlock Style="{StaticResource CaptionText}" TextWrapping="Wrap" Margin="0,0,0,10"
+                                               Text="「全屏」铺满主显示器；「巨幕跨屏」把所有显示器拼成一块大屏（适合投屏 / 拼接大屏展示）。大屏模式下窗口尺寸被锁定，最小化会被拦截，Esc 或 F11 退出。" />
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Style="{StaticResource SecondaryButton}" Content="进入全屏"
+                                                Focusable="False" Click="OnFullScreenNow" />
+                                        <Button Style="{StaticResource SecondaryButton}" Content="进入巨幕跨屏"
+                                                Margin="10,0,0,0" Focusable="False" Click="OnMegaNow" />
+                                    </StackPanel>
+                                    <TextBlock x:Name="TxtScreenInfo" Style="{StaticResource CaptionText}"
+                                               TextWrapping="Wrap" Margin="0,10,0,0" />
+                                </StackPanel>
+
+                                <Border Height="1" Background="{DynamicResource DividerBrush}" Margin="0,0,0,16" />
+
+                                <TextBlock Style="{StaticResource SectionHeaderText}" Text="外观" />
+                                <StackPanel Margin="0,0,0,16">
+                                    <ComboBox x:Name="CmbTheme" Style="{StaticResource FluentComboBox}"
+                                              SelectionChanged="OnThemeSelectionChanged">
+                                        <ComboBoxItem Content="跟随系统" />
+                                        <ComboBoxItem Content="浅色" />
+                                        <ComboBoxItem Content="深色" />
+                                    </ComboBox>
+                                    <CheckBox x:Name="TglMica" Style="{StaticResource FluentToggleSwitch}"
+                                              Content="使用 Mica 云母材质背景（Windows 11）" Margin="0,14,0,0"
+                                              Checked="OnSettingToggled" Unchecked="OnSettingToggled" />
+                                </StackPanel>
+
+                                <Border Height="1" Background="{DynamicResource DividerBrush}" Margin="0,0,0,16" />
+
+                                <TextBlock Style="{StaticResource SectionHeaderText}" Text="数据" />
+                                <StackPanel Margin="0,0,0,16">
+                                    <TextBlock x:Name="TxtStatsDetail" Style="{StaticResource SecondaryText}"
+                                               TextWrapping="Wrap" LineHeight="22" Margin="0,0,0,12" />
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Style="{StaticResource AccentButton}" Content="打开专注统计"
+                                                Focusable="False" Click="OnOpenStats" />
+                                        <Button Style="{StaticResource SecondaryButton}" Content="重置统计"
+                                                Margin="8,0,0,0" Focusable="False" Click="OnResetStats" />
+                                    </StackPanel>
+                                </StackPanel>
+
+                                <Border Height="1" Background="{DynamicResource DividerBrush}" Margin="0,0,0,16" />
+
+                                <TextBlock Style="{StaticResource SectionHeaderText}" Text="快捷键" />
+                                <TextBlock Style="{StaticResource CaptionText}" TextWrapping="Wrap" LineHeight="20"
+                                           Margin="0,0,0,16"
+                                           Text="空格：开始 / 暂停&#x0a;R：重置当前阶段&#x0a;S：跳过当前阶段&#x0a;F11 或 F：切换大屏方式&#x0a;Esc：关闭设置 / 退出大屏&#x0a;Ctrl + ,：打开设置&#x0a;Ctrl + 1 / 2 / 3：窗口 / 全屏 / 巨幕&#x0a;Ctrl + Shift + Q：强制退出" />
+
+                                <TextBlock x:Name="TxtVersion" Style="{StaticResource CaptionText}" TextWrapping="Wrap" />
+
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!-- ===================== 浮出提示 ===================== -->
+            <Border x:Name="ToastHost" Grid.RowSpan="3" Visibility="Collapsed" Opacity="0"
+                    HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,76"
+                    CornerRadius="8" Padding="18,12" IsHitTestVisible="False"
+                    Background="{DynamicResource SurfaceBrush}"
+                    BorderBrush="{DynamicResource StrokeBrush}" BorderThickness="1">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="22" ShadowDepth="4" Opacity="0.32" Color="Black" />
+                </Border.Effect>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Name="ToastGlyph" Text="&#xE7BA;" FontFamily="{DynamicResource AppIconFontFamily}"
+                               FontSize="16" VerticalAlignment="Center" Margin="0,0,12,0"
+                               Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock x:Name="ToastText" Text="" VerticalAlignment="Center" MaxWidth="420"
+                               TextWrapping="Wrap" Foreground="{DynamicResource TextPrimaryBrush}" />
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Border>
+</Window>

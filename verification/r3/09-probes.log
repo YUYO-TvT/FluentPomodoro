@@ -1,0 +1,28 @@
+=== P1: rotation interval combo mapping and round-trip ===
+[PASS] P1 BackgroundRotateMinutes=5: panel text and persisted value agree :: TxtBgInfo='当前：bg-blue.png | 文件夹内共 3 张 · 每 5 分钟轮换'  persisted=5 (expected 5)
+[PASS] P1 BackgroundRotateMinutes=15: panel text and persisted value agree :: TxtBgInfo='当前：bg-blue.png | 文件夹内共 3 张 · 每 15 分钟轮换'  persisted=15 (expected 15)
+[PASS] P1 BackgroundRotateMinutes=30: panel text and persisted value agree :: TxtBgInfo='当前：bg-blue.png | 文件夹内共 3 张 · 每 30 分钟轮换'  persisted=30 (expected 30)
+[PASS] P1 BackgroundRotateMinutes=60: panel text and persisted value agree :: TxtBgInfo='当前：bg-blue.png | 文件夹内共 3 张 · 每 1 小时轮换'  persisted=60 (expected 60)
+[PASS] P1 BackgroundRotateMinutes=1440: panel text and persisted value agree :: TxtBgInfo='当前：bg-blue.png | 文件夹内共 3 张 · 每天轮换'  persisted=1440 (expected 1440)
+
+=== P2: noise volume slider ===
+[PASS] P2 the volume slider updates its label and persists the new volume :: SetValue(25) ok=True label='25%' persisted NoiseVolume=25
+
+=== P3: missing noise file handling ===
+[PASS] P3 the panel reports 2 imported files with only 1 usable :: TxtNoiseInfo='已导入 2 个文件（1 个可用）· 已停止'
+[PASS] P3 playback still starts even though the first track is a missing file :: button state=PLAYING blue-tinted px=48
+[PASS] P3 the track actually playing is the one that exists :: playing='tone-440.wav'
+[PASS] P3 the missing path is still listed in settings.json (the list is not silently rewritten) :: NoiseTracks=[C:\Users\Administrator\Documents\deepseek-harness\default-workspace\FluentPomodoro\verification\r3\does-not-exist.wav, C:\Users\Administrator\Documents\deepseek-harness\default-workspace\FluentPomodoro\artifacts\test-assets\tone-440.wav]
+
+=== P4: shuffle across two tracks ===
+shuffle sequence over 5 下一首 presses: r3-tone-880b.wav -> tone-440.wav -> r3-tone-880b.wav -> tone-440.wav -> r3-tone-880b.wav -> tone-440.wav
+[PASS] P4 shuffle never stays on the same file across 下一首 presses :: sequence=r3-tone-880b.wav -> tone-440.wav -> r3-tone-880b.wav -> tone-440.wav -> r3-tone-880b.wav -> tone-440.wav; consecutive repeats=0
+
+=== P5: corrupt history.json ===
+[PASS] P5 the app still starts with a truncated history.json :: hwnd=10815188
+[PASS] P5 the statistics window still opens :: stats hwnd=6227688
+[PASS] P5 the corrupt history degrades to zeros instead of crashing :: ValToday='0 分钟' TxtRange='共 0 天有记录' ValTotal='0 分钟'
+[PASS] P5 the main window is still responsive :: WM_NULL ping after the corrupt history = ok
+==============================================================================
+TOTAL 15 / 15 passed, 0 failed
+==============================================================================

@@ -1,0 +1,10 @@
+771CFB4DAECA512B  MainWindow.xaml.cs
+0A6C10BDD6F89E8F  MainWindow.xaml
+F0EAB427B3F2B428  StatsWindow.xaml
+E54EFDFEA9EEDA1C  StatsWindow.xaml.cs
+2338E9BB71B7187E  Controls\ContributionGraph.cs
+4D5B43154315F707  Services\BackgroundService.cs
+706E3A575F2B9D97  Services\NoisePlayer.cs
+B2C2F2E5E2B6A132  Services\FocusHistory.cs
+E915FFC876D1611F  Services\AppSettings.cs
+3DF77602766E6697  Services\ThemeManager.cs

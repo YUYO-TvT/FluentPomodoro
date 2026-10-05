@@ -1,0 +1,225 @@
+main hwnd=4261662
+--- settings panel control ids (main window) ---
+   TxtTitlePhase  ControlType.Text             name='专注'
+   BtnStats       ControlType.Button           name=''
+   BtnNoise       ControlType.Button           name=''
+   BtnSettingsTop ControlType.Button           name=''
+   BtnMin         ControlType.Button           name=''
+   BtnBig         ControlType.Button           name=''
+   BtnClose       ControlType.Button           name=''
+   TxtPhase       ControlType.Text             name='专注'
+   TxtTime        ControlType.Text             name='25:00'
+   TxtRound       ControlType.Text             name='第 1 / 4 个番茄'
+   TxtStatus      ControlType.Text             name='空格 开始/暂停 · R 重置 · S 跳过 · F11 强制大屏 · Esc 退出大屏'
+   BtnPlay        ControlType.Button           name=''
+   PlayGlyph      ControlType.Text             name=''
+   PlayLabel      ControlType.Text             name='开始专注'
+   BtnReset       ControlType.Button           name='重置'
+   BtnSkip        ControlType.Button           name='跳过'
+   RbWindow       ControlType.RadioButton      name='窗口'
+   RbFull         ControlType.RadioButton      name='全屏'
+   RbMega         ControlType.RadioButton      name='巨幕跨屏'
+   TxtStats       ControlType.Text             name='今日 0 个番茄 · 0 分钟 · 连续 0 天'
+   BtnSettings    ControlType.Button           name=''
+                  ControlType.Button           name=''
+   LblFocus       ControlType.Text             name='25 分钟'
+   SldFocus       ControlType.Slider           name=''
+   DecreaseLarge  ControlType.Button           name=''
+   LblShort       ControlType.Text             name='5 分钟'
+   SldShort       ControlType.Slider           name=''
+   DecreaseLarge  ControlType.Button           name=''
+   LblLong        ControlType.Text             name='15 分钟'
+   SldLong        ControlType.Slider           name=''
+   DecreaseLarge  ControlType.Button           name=''
+   LblInterval    ControlType.Text             name='4 个'
+   SldInterval    ControlType.Slider           name=''
+   DecreaseLarge  ControlType.Button           name=''
+   TglClock       ControlType.CheckBox         name='显示当前时间（时钟）'
+   TxtBgInfo      ControlType.Text             name='未设置背景图片（可选一张图片，或选一个文件夹在其中的图片间轮换）'
+                  ControlType.Button           name='选择图片'
+                  ControlType.Button           name='选择文件夹'
+                  ControlType.Button           name='换一张'
+                  ControlType.Button           name='清除'
+   LblBgOpacity   ControlType.Text             name='95%'
+   SldBgOpacity   ControlType.Slider           name=''
+   DecreaseLarge  ControlType.Button           name=''
+   CmbBgRotate    ControlType.ComboBox         name=''
+   TglBgOnFocus   ControlType.CheckBox         name='每次开始专注时换一张'
+   TglBgAccent    ControlType.CheckBox         name='用图片主色调作为主题色'
+   TxtNoiseInfo   ControlType.Text             name='尚未导入音频文件（支持 mp3 / wav / wma / m4a 等）'
+                  ControlType.Button           name='添加音频'
+                  ControlType.Button           name='清空列表'
+   NoiseList      ControlType.List             name=''
+                  ControlType.Button           name='播放 / 暂停'
+                  ControlType.Button           name='下一首'
+   LblNoiseVolume ControlType.Text             name='70%'
+   SldNoiseVolume ControlType.Slider           name=''
+   DecreaseLarge  ControlType.Button           name=''
+   TglNoiseAuto   ControlType.CheckBox         name='开始专注时自动播放'
+   TglNoiseOnlyFocus ControlType.CheckBox         name='仅在专注阶段播放（暂停/休息时停）'
+   TglNoiseShuffle ControlType.CheckBox         name='随机播放'
+   TglAutoStart   ControlType.CheckBox         name='自动开始下一阶段'
+   TglSound       ControlType.CheckBox         name='阶段结束提示音'
+                  ControlType.Button           name='试听提示音'
+   TglKeepAwake   ControlType.CheckBox         name='专注时保持屏幕常亮'
+   TglNotify      ControlType.CheckBox         name='阶段结束闪烁任务栏提醒'
+   TglTopmost     ControlType.CheckBox         name='窗口始终置顶'
+   TglLock        ControlType.CheckBox         name='专注锁定（拦截最小化 / 关闭）'
+   TglAutoBig     ControlType.CheckBox         name='开始专注时自动进入大屏'
+   TglBigTopmost  ControlType.CheckBox         name='大屏时强制置顶并覆盖任务栏'
+                  ControlType.Button           name='进入全屏'
+                  ControlType.Button           name='进入巨幕跨屏'
+   TxtScreenInfo  ControlType.Text             name='显示器：1 台 · 虚拟桌面：1920 × 1080 @ (0,0) 物理像素
+当前方式：窗口 · 置顶：否'
+   CmbTheme       ControlType.ComboBox         name=''
+   TglMica        ControlType.CheckBox         name='使用 Mica 云母材质背景（Windows 11）'
+   TxtStatsDetail ControlType.Text             name='今日完成：0 个番茄（0 分钟）
+累计完成：0 个番茄
+连续专注：0 天
+历史记录：尚无（完成第一个番茄后生成）
+配置文件：C:\Users\Administrator\AppData\Roaming\FluentPomodoro\settings.json'
+                  ControlType.Button           name='打开专注统计'
+                  ControlType.Button           name='重置统计'
+   TxtVersion     ControlType.Text             name='Fluent Pomodoro · 版本 1.0.0 · .NET 8.0.31 · 单文件自包含 EXE'
+   VerticalScrollBar ControlType.ScrollBar        name=''
+   PART_LineUpButton ControlType.Button           name=''
+   PageUp         ControlType.Button           name=''
+   PageDown       ControlType.Button           name=''
+   PART_LineDownButton ControlType.Button           name=''
+file dialog hwnd=984998
+--- dialog hwnd=984998 title='选择背景图片' ---
+   id='' type=ControlType.Pane       name='' rect=(648,213,944,360)
+   id='FolderBandModuleInner' type=ControlType.ToolBar    name='命令模块' rect=(648,213,944,32)
+   id='HelpButton' type=ControlType.Button     name='帮助(&H)' rect=(1555,215,28,27)
+   id='PreviewButton' type=ControlType.CheckBox   name='预览窗格' rect=(1519,215,28,27)
+   id='ViewControl' type=ControlType.SplitButton name='大图标' rect=(1464,215,55,27)
+   id='SplitMenuButton' type=ControlType.Button     name='视图滑块' rect=(1491,215,18,27)
+   id='{7DDC1264-7E4D-4F74-BBC0-D191987C8D0F}' type=ControlType.Button     name='组织​​' rect=(651,215,68,27)
+   id='{E44616AD-6DF1-4B94-85A4-E465AE8A19DB}' type=ControlType.Button     name='新建​​文件夹​​' rect=(719,215,90,27)
+   id='ProperTreeHost' type=ControlType.Pane       name='控制项宿主' rect=(650,245,154,328)
+   id='100' type=ControlType.Pane       name='导航窗格' rect=(650,245,154,328)
+   id='listview' type=ControlType.Pane       name='Shell 文件夹视图' rect=(808,245,784,328)
+   id='' type=ControlType.List       name='项目视图' rect=(808,245,784,328)
+   id='VerticalScrollBar' type=ControlType.Pane       name='垂直' rect=(1575,245,17,328)
+   id='0' type=ControlType.ListItem   name='r3-00-launch.png' rect=(822,251,105,135)
+   id='System.ItemNameDisplay' type=ControlType.Edit       name='名称' rect=(827,349,95,35)
+   id='1' type=ControlType.ListItem   name='r3-00-printwindow.png' rect=(929,251,105,135)
+   id='System.ItemNameDisplay' type=ControlType.Edit       name='名称' rect=(935,349,94,35)
+   id='2' type=ControlType.ListItem   name='r3-00-stats.png' rect=(1036,251,105,118)
+   id='System.ItemNameDisplay' type=ControlType.Edit       name='名称' rect=(1042,349,93,18)
+   id='3' type=ControlType.ListItem   name='r3-b1-clock-on-window.png' rect=(1143,251,105,135)
+   id='System.ItemNameDisplay' type=ControlType.Edit       name='名称' rect=(1148,349,96,35)
+   id='4' type=ControlType.ListItem   name='r3-b2-clock-on-zoom.png' rect=(1250,251,105,135)
+   id='System.ItemNameDisplay' type=ControlType.Edit       name='名称' rect=(1255,349,96,35)
+   id='5' type=ControlType.ListItem   name='r3-b3-clock-off-window.png' rect=(1357,251,105,135)
+   id='System.ItemNameDisplay' type=ControlType.Edit       name='名称' rect=(1364,349,92,35)
+   id='6' type=ControlType.ListItem   name='r3-c1-stats-window.png' rect=(1464,251,105,135)
+   id='System.ItemNameDisplay' type=ControlType.Edit       name='名称' rect=(1472,349,90,35)
+   id='7' type=ControlType.ListItem   name='r3-c2-hover-tooltip.png' rect=(822,387,105,135)
+   id='System.ItemNameDisplay' type=ControlType.Edit       name='名称' rect=(830,485,89,35)
+   id='8' type=ControlType.ListItem   name='r3-c3-hover-zoom.png' rect=(929,387,105,135)
+   id='System.ItemNameDisplay' type=ControlType.Edit       name='名称' rect=(936,485,91,35)
+   id='9' type=ControlType.ListItem   name='r3-d1-stats-after-focus.png' rect=(1036,387,105,135)
+   id='System.ItemNameDisplay' type=ControlType.Edit       name='名称' rect=(1041,485,95,35)
+   id='10' type=ControlType.ListItem   name='r3-e0-plain.png' rect=(1143,387,105,118)
+   id='System.ItemNameDisplay' type=ControlType.Edit       name='名称' rect=(1149,485,94,18)
+   id='11' type=ControlType.ListItem   name='r3-e1-light-red.png' rect=(1250,387,105,135)
+   id='System.ItemNameDisplay' type=ControlType.Edit       name='名称' rect=(1256,485,93,35)
+   id='12' type=ControlType.ListItem   name='r3-e2-restart-red.png' rect=(1357,387,105,135)
+   id='System.ItemNameDisplay' type=ControlType.Edit       name='名称' rect=(1362,485,95,35)
+   id='13' type=ControlType.ListItem   name='r3-e3-light-blue.png' rect=(1464,387,105,135)
+   id='System.ItemNameDisplay' type=ControlType.Edit       name='名称' rect=(1469,485,95,35)
+   id='14' type=ControlType.ListItem   name='r3-e4-opacity-100.png' rect=(822,523,105,135)
+   id='System.ItemNameDisplay' type=ControlType.Edit       name='名称' rect=(828,621,94,35)
+   id='1090' type=ControlType.Pane       name='文件名(N):' rect=(778,588,57,17)
+   id='1148' type=ControlType.Pane       name='' rect=(840,584,535,26)
+   id='1148' type=ControlType.Pane       name='' rect=(840,584,535,26)
+   id='1148' type=ControlType.Pane       name='' rect=(844,589,511,17)
+   id='1136' type=ControlType.Pane       name='图片文件 (*.jpg;*.jpeg;*.png;*.bmp;*.gif;*.tif;*.tiff;*.jfif)' rect=(1387,584,188,25)
+   id='1' type=ControlType.Pane       name='打开(O)' rect=(1387,615,88,26)
+   id='2' type=ControlType.Pane       name='取消' rect=(1487,615,88,26)
+   id='' type=ControlType.Pane       name='' rect=(1575,641,17,17)
+   id='' type=ControlType.Pane       name='' rect=(648,157,944,56)
+   id='40965' type=ControlType.Pane       name='' rect=(648,157,944,56)
+   id='' type=ControlType.Pane       name='' rect=(648,166,100,34)
+   id='' type=ControlType.Pane       name='导航按钮' rect=(652,168,96,32)
+   id='' type=ControlType.Pane       name='' rect=(748,165,36,36)
+   id='' type=ControlType.Pane       name='上区段' rect=(748,168,36,36)
+   id='41477' type=ControlType.Pane       name='' rect=(784,157,583,53)
+   id='' type=ControlType.Pane       name='' rect=(786,167,579,35)
+   id='' type=ControlType.Pane       name='' rect=(786,167,509,35)
+   id='1001' type=ControlType.Pane       name='地址: C:\Users\Administrator\Documents\deepseek-harness\default-workspace\FluentPomodoro\verification\r3' rect=(792,167,503,35)
+   id='' type=ControlType.Pane       name='地址区段' rect=(1295,167,70,35)
+   id='' type=ControlType.Pane       name='' rect=(1371,183,6,1)
+   id='' type=ControlType.Pane       name='' rect=(1377,163,204,41)
+   id='' type=ControlType.Pane       name='' rect=(1377,166,204,37)
+   id='' type=ControlType.Pane       name='' rect=(1382,166,194,37)
+   id='SearchEditBox' type=ControlType.Edit       name='搜索框' rect=(1384,176,158,17)
+   id='SearchBoxSearchButton' type=ControlType.Button     name='搜索' rect=(1546,166,28,37)
+   id='' type=ControlType.Pane       name='' rect=(1585,183,7,1)
+foreground = 984998
+focused element = id='1148' type=ControlType.Pane name=''
+edits found: 16
+   edit id='System.ItemNameDisplay' name='名称' value='r3-00-launch.png'
+   edit id='System.ItemNameDisplay' name='名称' value='r3-00-printwindow.png'
+   edit id='System.ItemNameDisplay' name='名称' value='r3-00-stats.png'
+   edit id='System.ItemNameDisplay' name='名称' value='r3-b1-clock-on-window.png'
+   edit id='System.ItemNameDisplay' name='名称' value='r3-b2-clock-on-zoom.png'
+   edit id='System.ItemNameDisplay' name='名称' value='r3-b3-clock-off-window.png'
+   edit id='System.ItemNameDisplay' name='名称' value='r3-c1-stats-window.png'
+   edit id='System.ItemNameDisplay' name='名称' value='r3-c2-hover-tooltip.png'
+   edit id='System.ItemNameDisplay' name='名称' value='r3-c3-hover-zoom.png'
+   edit id='System.ItemNameDisplay' name='名称' value='r3-d1-stats-after-focus.png'
+   edit id='System.ItemNameDisplay' name='名称' value='r3-e0-plain.png'
+   edit id='System.ItemNameDisplay' name='名称' value='r3-e1-light-red.png'
+   edit id='System.ItemNameDisplay' name='名称' value='r3-e2-restart-red.png'
+   edit id='System.ItemNameDisplay' name='名称' value='r3-e3-light-blue.png'
+   edit id='System.ItemNameDisplay' name='名称' value='r3-e4-opacity-100.png'
+   edit id='SearchEditBox' name='搜索框' value=''
+-> setting value on id='SearchEditBox' name='搜索框'
+   SetValue ok
+   button id='HelpButton' name='帮助(&H)'
+   button id='SplitMenuButton' name='视图滑块'
+   button id='{7DDC1264-7E4D-4F74-BBC0-D191987C8D0F}' name='组织​​'
+   button id='' name=''
+   button id='SearchBoxClearButton' name='清空'
+dialog still open: 1
+BackgroundImagePath now = ''
+settings panel closed? SldBgOpacity found = False
+folder dialog hwnd=722836
+--- dialog hwnd=722836 title='选择背景图片文件夹' ---
+   id='' type=ControlType.Pane       name='' rect=(648,213,944,360)
+   id='FolderBandModuleInner' type=ControlType.ToolBar    name='命令模块' rect=(648,213,944,32)
+   id='HelpButton' type=ControlType.Button     name='帮助(&H)' rect=(1555,215,28,27)
+   id='ViewControl' type=ControlType.SplitButton name='大图标' rect=(1492,215,55,27)
+   id='SplitMenuButton' type=ControlType.Button     name='视图滑块' rect=(1519,215,18,27)
+   id='{7DDC1264-7E4D-4F74-BBC0-D191987C8D0F}' type=ControlType.Button     name='组织​​' rect=(651,215,68,27)
+   id='{E44616AD-6DF1-4B94-85A4-E465AE8A19DB}' type=ControlType.Button     name='新建​​文件夹​​' rect=(719,215,90,27)
+   id='ProperTreeHost' type=ControlType.Pane       name='控制项宿主' rect=(650,245,154,328)
+   id='100' type=ControlType.Pane       name='导航窗格' rect=(650,245,154,328)
+   id='listview' type=ControlType.Pane       name='Shell 文件夹视图' rect=(808,245,784,328)
+   id='' type=ControlType.List       name='项目视图' rect=(808,245,784,328)
+   id='EmptyTextFocusable' type=ControlType.Text       name='没有与搜索条件匹配的项。' rect=(808,251,784,35)
+   id='1090' type=ControlType.Pane       name='文件夹:' rect=(778,588,39,17)
+   id='1152' type=ControlType.Pane       name='' rect=(822,584,753,26)
+   id='1' type=ControlType.Pane       name='选择文件夹' rect=(1371,615,104,26)
+   id='2' type=ControlType.Pane       name='取消' rect=(1487,615,88,26)
+   id='' type=ControlType.Pane       name='' rect=(1575,641,17,17)
+   id='' type=ControlType.Pane       name='' rect=(648,157,944,56)
+   id='40965' type=ControlType.Pane       name='' rect=(648,157,944,56)
+   id='' type=ControlType.Pane       name='' rect=(648,166,100,34)
+   id='' type=ControlType.Pane       name='导航按钮' rect=(652,168,96,32)
+   id='' type=ControlType.Pane       name='' rect=(748,165,36,36)
+   id='' type=ControlType.Pane       name='上区段' rect=(748,168,36,36)
+   id='41477' type=ControlType.Pane       name='' rect=(784,157,583,53)
+   id='' type=ControlType.Pane       name='' rect=(786,167,579,35)
+   id='' type=ControlType.Pane       name='' rect=(786,167,509,35)
+   id='1001' type=ControlType.Pane       name='地址: C:\Users\Administrator\Documents\deepseek-harness\default-workspace\FluentPomodoro\verification\r3' rect=(792,167,503,35)
+   id='' type=ControlType.Pane       name='地址区段' rect=(1295,167,70,35)
+   id='' type=ControlType.Pane       name='' rect=(1371,183,6,1)
+   id='' type=ControlType.Pane       name='' rect=(1377,163,204,41)
+   id='' type=ControlType.Pane       name='' rect=(1377,166,204,37)
+   id='' type=ControlType.Pane       name='' rect=(1382,166,194,37)
+   id='SearchEditBox' type=ControlType.Edit       name='搜索框' rect=(1384,176,158,17)
+   id='SearchBoxSearchButton' type=ControlType.Button     name='搜索' rect=(1546,166,28,37)
+   id='' type=ControlType.Pane       name='' rect=(1585,183,7,1)

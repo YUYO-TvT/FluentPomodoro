@@ -1,0 +1,44 @@
+test audio: tone-440=176444B (2s, shipped)  tone-880=88244B (1s, mine)  corrupt=3000B (garbage, mine)
+[PASS] main window present :: hwnd=1443684
+[PASS] with no tracks the settings panel says 尚未导入 :: TxtNoiseInfo='尚未导入音频文件（支持 mp3 / wav / wma / m4a 等）'
+[PASS] with no tracks the noise button is in the stopped state :: state=STOPPED blue-tinted px=19 neutral px=22 avg(B-R)=-0.1
+[PASS] 添加音频 opens the native 添加白噪音音频 dialog and accepts the path :: title='添加白噪音音频' closed=True
+[PASS] the settings panel reports the imported track :: TxtNoiseInfo='已导入 1 个文件（1 个可用）· 已停止'
+[PASS] the track list control shows the imported file :: list items: C:\Users\Administrator\Documents\deepseek-harness\default-workspace\FluentPomodoro\artifacts\test-assets\tone-440.wav | C:\Users\Administrator\Documents\deepseek-harness\default-workspace\FluentPomodoro\artifacts\test-assets\tone-440.wav
+[PASS] settings.json persists NoiseTracks as an array holding exactly the imported file :: NoiseTracks=[C:\Users\Administrator\Documents\deepseek-harness\default-workspace\FluentPomodoro\artifacts\test-assets\tone-440.wav]
+[PASS] 开始专注时自动播放 toggles Off->On through its real automation peer :: state Off -> On
+[PASS] 仅在专注阶段播放 toggles through its real automation peer :: state On -> Off
+[PASS] 仅在专注阶段播放 is On for the auto-play test :: state=On
+[PASS] both noise toggles persisted to settings.json :: NoiseAutoPlayOnFocus=True NoiseOnlyDuringFocus=True
+[PASS] before starting the focus phase the noise button is stopped :: state=STOPPED avg(B-R)=-0.1 blue-tinted px=19
+[PASS] starting the focus phase auto-plays the noise (button turns accent/blue-tinted) :: title='24:57 · 专注 · 微软风格番茄钟' state=PLAYING blue-tinted px=48 avg(B-R)=35
+[PASS] the 白噪音 status text shows 正在播放 during the focus phase :: TxtNoiseInfo='已导入 1 个文件（1 个可用）· 正在播放：tone-440.wav'
+[PASS] pausing the focus phase returns the noise to stopped :: title='24:54 · 专注 · 微软风格番茄钟' state=STOPPED blue-tinted px=19 avg(B-R)=-0.1
+[PASS] the 白噪音 status text shows 已停止 after pausing :: TxtNoiseInfo='已导入 1 个文件（1 个可用）· 已停止'
+[PASS] the title-bar noise button starts playback when invoked :: invoked=True state=PLAYING
+[PASS] the title-bar noise button pauses playback when invoked again :: state=STOPPED
+[PASS] 下一首 with a single track keeps the same track playing :: before='已导入 1 个文件（1 个可用）· 正在播放：tone-440.wav' after='已导入 1 个文件（1 个可用）· 正在播放：tone-440.wav'
+[PASS] a second track can be imported :: TxtNoiseInfo='已导入 2 个文件（2 个可用）· 正在播放：tone-440.wav'
+[PASS] settings.json lists both tracks :: NoiseTracks=[C:\Users\Administrator\Documents\deepseek-harness\default-workspace\FluentPomodoro\artifacts\test-assets\tone-440.wav, C:\Users\Administrator\Documents\deepseek-harness\default-workspace\FluentPomodoro\verification\r3\r3-tone-880.wav]
+[PASS] 下一首 with two tracks switches to the other file :: playing 'r3-tone-880.wav' -> 'tone-440.wav'  (before='已导入 2 个文件（2 个可用）· 正在播放：r3-tone-880.wav' after='已导入 2 个文件（2 个可用）· 正在播放：tone-440.wav')
+[PASS] 清空列表 empties the list :: TxtNoiseInfo='尚未导入音频文件（支持 mp3 / wav / wma / m4a 等）'
+[PASS] the corrupt file and a good file are both imported :: TxtNoiseInfo='已导入 2 个文件（2 个可用）· 已停止'
+[PASS] the corrupt file is tracked first in settings.json :: NoiseTracks=[C:\Users\Administrator\Documents\deepseek-harness\default-workspace\FluentPomodoro\verification\r3\r3-corrupt.wav, C:\Users\Administrator\Documents\deepseek-harness\default-workspace\FluentPomodoro\artifacts\test-assets\tone-440.wav]
+quiet idle CPU (nothing playing, no UIA traffic) over 8s = 0s
+corrupt-then-good: toast='白噪音播放失败：Cannot find the media file.'; idle CPU after the failure over 8s = 0.62s (baseline 0s); button=PLAYING; responsive=True
+[PASS] playing a corrupt file does not spin the CPU (no retry loop) :: idle CPU 0.62s after the failure vs 0s baseline over the same 8s window
+[PASS] the window stays responsive while the corrupt file is handled :: SendMessageTimeout(WM_NULL, 2000ms) non-zero = True
+[PASS] the failure is reported to the user (toast) instead of looping silently :: toast = '白噪音播放失败：Cannot find the media file.'
+[PASS] the player falls through to the good track rather than retrying the corrupt one :: button state=PLAYING blue-tinted px=48
+[PASS] the status text names the good track after the fall-through :: TxtNoiseInfo='已导入 2 个文件（2 个可用）· 正在播放：tone-440.wav'
+corrupt-only: toast='白噪音播放失败：Cannot find the media file.'; idle CPU after failure=0.02s (baseline 0s); button=STOPPED; TxtNoiseInfo='已导入 1 个文件（1 个可用）· 已停止'
+[PASS] a lone corrupt file stops the player instead of looping :: button state=STOPPED; TxtNoiseInfo='已导入 1 个文件（1 个可用）· 已停止'
+[PASS] a lone corrupt file does not spin the CPU :: idle CPU 0.02s vs 0s baseline over the same 8s window
+[PASS] the lone-corrupt failure is reported :: toast='白噪音播放失败：Cannot find the media file.'
+[PASS] only the 1-second track is loaded :: NoiseTracks=[C:\Users\Administrator\Documents\deepseek-harness\default-workspace\FluentPomodoro\verification\r3\r3-tone-880.wav]
+[PASS] a single 1-second track keeps looping (still playing 7s later, i.e. >=6 repeats) :: t=3s state=PLAYING (blue px=48);  t=7s state=PLAYING (blue px=48)
+[PASS] the app exits cleanly while a track is loaded and playing :: HasExited=True
+[PASS] noise settings survived the exit :: NoiseTracks=[C:\Users\Administrator\Documents\deepseek-harness\default-workspace\FluentPomodoro\verification\r3\r3-tone-880.wav] volume=70 shuffle=False auto=True onlyFocus=True
+==============================================================================
+TOTAL 37 / 37 passed, 0 failed
+==============================================================================

@@ -1,0 +1,25 @@
+[PASS] rotation test: main window present :: hwnd=4917008
+[PASS] rotation test: the focus timer is NOT running (rotation must be independent of the timer) :: title='25:00 · 专注 · 微软风格番茄钟'
+t=0s TxtBgInfo='当前：bg-blue.png | 文件夹内共 3 张 · 每 5 分钟轮换'
+[PASS] rotation test: folder loaded with the 5-minute interval shown :: TxtBgInfo='当前：bg-blue.png | 文件夹内共 3 张 · 每 5 分钟轮换'
+t=30s current: bg-blue.png
+t=60s current: bg-blue.png
+t=91s current: bg-blue.png
+t=121s current: bg-blue.png
+t=151s current: bg-blue.png
+t=181s current: bg-blue.png
+t=211s current: bg-blue.png
+t=241s current: bg-blue.png
+t=271s current: bg-blue.png
+t=301.5s CHANGED -> '当前：bg-red.png | 文件夹内共 3 张 · 每 5 分钟轮换'
+t=302s current: bg-red.png
+t=332s current: bg-red.png
+t=362s current: bg-red.png
+t=392s current: bg-red.png
+[PASS] rotation test: the background image rotated on the 5-minute timer :: 1 change(s) observed; first at t=301.5s
+[PASS] rotation test: the rotation happened at ~5 minutes, not immediately and not never :: first change at t=301.5s (timer interval 20s, target 300s, sampler period 10s)
+   change at t=301.5s: 当前：bg-red.png | 文件夹内共 3 张 · 每 5 分钟轮换
+[PASS] rotation test: exits cleanly :: processes=0
+==============================================================================
+TOTAL 6 / 6 passed, 0 failed
+==============================================================================

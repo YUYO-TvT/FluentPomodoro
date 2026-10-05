@@ -1,0 +1,34 @@
+[PASS] G1 launches with a fully non-default settings file and shows no dialog :: hwnd=2885356 dialogs=0
+[PASS] G1 window still opens at the remembered 640x780 :: rect={"Y":126,"W":640,"X":640,"H":780}
+[PASS] G1 the settings panel reflects the file (focus slider, new toggles) :: SldFocus=7 TglClock=Off SldBgOpacity=0.45 SldNoiseVolume=33 TglBgAccent=Off
+[PASS] G1 exits cleanly :: HasExited=True
+[PASS] G1 settings round-trip has ZERO differences across all 32 fields (incl. the 4 new groups) :: all 32 keys identical after the round-trip (NoiseTracks=[C:\Users\Administrator\Documents\deepseek-harness\default-workspace\FluentPomodoro\artifacts\test-assets\tone-440.wav|C:\Users\Administrator\Documents\deepseek-harness\default-workspace\FluentPomodoro\verification\r3\missing-a.wav|C:\Users\Administrator\Documents\deepseek-harness\default-workspace\FluentPomodoro\verification\r3\missing-b.mp3])
+[PASS] G2-A (NoiseTracks:"oops") : app starts with no dialog despite the bad field :: hwnd=3671896 dialogs=0
+[PASS] G2-A (NoiseTracks:"oops") : the bad array falls back to empty and every other field is preserved :: all preserved: FocusMinutesToday=150, CompletedToday=5, FocusMinutes=44, TotalCompleted=42, BackgroundRotateMinutes=15, ShowClock=False, NoiseVolume=42, BackgroundOpacity=0.55, StreakDays=7, NoiseTracks=, NoiseAutoPlayOnFocus=True, Theme=Dark
+   title at launch = '44:00 · 专注 · 微软风格番茄钟'
+[PASS] G2-B (BackgroundOpacity:99) : app starts with no dialog despite the bad field :: hwnd=3344050 dialogs=0
+[PASS] G2-B (BackgroundOpacity:99) : opacity clamps to 1.0 and every other field is preserved :: all preserved: TotalCompleted=42, FocusMinutes=44, BackgroundOpacity=1, NoiseVolume=42, BackgroundRotateMinutes=15, StreakDays=7, ShowClock=False, CompletedToday=5
+   title at launch = '44:00 · 专注 · 微软风格番茄钟'
+--- G2-C observation probe (invalid strings for new bool/int fields) ---
+[PASS] G2-C app starts with no dialog :: hwnd=1902536 dialogs=0
+G2-C observed: ShowClock=False (file said 'oops'; class default = True)  BackgroundRotateMinutes=0 (file said 'abc')  BackgroundOpacity=0.35  NoiseVolume=11  FocusMinutes=44  CompletedToday=5  TotalCompleted=42
+[PASS] G2-C the bad int falls back to its default (0) and other fields survive :: BackgroundRotateMinutes=0 BackgroundOpacity=0.35 NoiseVolume=11 FocusMinutes=44 CompletedToday=5 TotalCompleted=42
+[PASS] G2-C the invalid bool string is coerced to False rather than the class default True :: ShowClock=False (documented default is True; a non-boolean string is coerced to False by ReadTolerant.GetBool)
+virtual desktop = 1920x1080 @ (0,0)
+[PASS] G3 window mode starts at 640x780 :: rect={"Y":126,"W":640,"X":640,"H":780}
+[PASS] G3 F11 fills the whole virtual desktop :: 1920x1080 @ (0,0)
+[PASS] G3 big screen is topmost (WS_EX_TOPMOST 0x8) as configured :: exstyle=0x8
+[PASS] G3 WM_SYSCOMMAND SC_MINIMIZE is blocked :: IsIconic=False rect=1920x1080
+[PASS] G3 ShowWindow(SW_MINIMIZE) is blocked :: IsIconic=False rect=1920x1080
+[PASS] G3 an external SetWindowPos resize is refused in big screen :: 1920x1080 @ (0,0)
+[PASS] G3 Esc restores exactly 640x780 :: 640x780 @ (640,126)
+[PASS] G3 the window is not left maximized after Esc :: IsZoomed=False
+[PASS] G3 topmost is released after leaving big screen :: exstyle=0x40100
+[PASS] G4 the 1-minute focus completes and advances to the break :: after 58.8s title='05:00 · 短休息 · 微软风格番茄钟'
+[PASS] G4 after completion: CompletedToday=1, FocusMinutesToday=1, TotalCompleted=1, StreakDays=1 :: CompletedToday=1 FocusMinutesToday=1 TotalCompleted=1 StreakDays=1 LastCompletedDate=2026-10-05
+[PASS] G4 history.json holds exactly 1 minute / 1 pomodoro for today :: today = 1 min / 1 pom
+[PASS] G4 the counters do not move again during the break (counted exactly once) :: 12s later: CompletedToday=1 FocusMinutesToday=1 TotalCompleted=1
+[PASS] G4 the bottom status line reports 1 个番茄 · 1 分钟 :: TxtStats='今日 1 个番茄 · 1 分钟 · 连续 1 天'
+==============================================================================
+TOTAL 26 / 26 passed, 0 failed
+==============================================================================

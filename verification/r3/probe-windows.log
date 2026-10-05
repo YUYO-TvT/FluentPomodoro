@@ -1,0 +1,18 @@
+started pid=4680
+HasExited=False
+MainWindowHandle from .NET = 9635594
+Threads=23  Responding=True
+raw top-level windows for pid 4680: 9
+   hwnd=9635594    vis=True     640x780   @(640,126) title='25:00 · 专注 · 微软风格番茄钟' class='HwndWrapper[FluentPomodoro;;66cc1e00-59e2-41ef-b960-4c162db11702]'
+   hwnd=1378056    vis=False      0x0     @(0,0) title='WISPTIS' class='TabletPenServiceHelperClass'
+   hwnd=4196118    vis=False    136x39    @(0,0) title='' class='HwndWrapper[FluentPomodoro;;a9973f6a-8020-4a28-9531-913f9054d366]'
+   hwnd=2623268    vis=False      0x0     @(0,0) title='SystemResourceNotifyWindow' class='HwndWrapper[FluentPomodoro;;fc20d588-8d6e-480f-a229-4bd2a64742a5]'
+   hwnd=9045792    vis=False      0x0     @(0,0) title='MediaContextNotificationWindow' class='HwndWrapper[FluentPomodoro;;c60c53e0-cda1-4212-9d35-a79f0249f571]'
+   hwnd=2557640    vis=False    136x39    @(0,0) title='' class='HwndWrapper[FluentPomodoro;;3c65810d-0211-45ea-83ae-308b8743cc13]'
+   hwnd=4458076    vis=False      0x0     @(0,0) title='MSCTFIME UI' class='MSCTFIME UI'
+   hwnd=3606226    vis=False      0x0     @(0,0) title='Default IME' class='IME'
+   hwnd=984848     vis=False      0x0     @(0,0) title='Default IME' class='IME'
+--- via Get-WindowsForPid (visible only) ---
+   hwnd=9635594      640x780   title='25:00 · 专注 · 微软风格番茄钟'
+Get-MainWindow = 0
+Get-WindowByTitle('') = 9635594

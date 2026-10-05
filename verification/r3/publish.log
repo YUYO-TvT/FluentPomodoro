@@ -1,0 +1,13 @@
+=== dotnet publish ... -o .\verify-dist-r3 ===
+  正在确定要还原的项目…
+  所有项目均是最新的，无法还原。
+  FluentPomodoro -> C:\Users\Administrator\Documents\deepseek-harness\default-workspace\FluentPomodoro\bin\Release\net8.0-windows\win-x64\FluentPomodoro.dll
+  FluentPomodoro -> C:\Users\Administrator\Documents\deepseek-harness\default-workspace\FluentPomodoro\verify-dist-r3\
+EXITCODE=0
+
+Name                 Length
+----                 ------
+FluentPomodoro.exe 66001079
+
+SHA256=C696A58C678CF2429233A2BFD2B4C7ED680188A9B5E85D59C113B13EB3681357
+EXE_BYTES=66001079

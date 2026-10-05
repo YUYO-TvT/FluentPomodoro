@@ -1,0 +1,23 @@
+EXE   : C:\Users\Administrator\Documents\deepseek-harness\default-workspace\FluentPomodoro\verify-dist-r3\FluentPomodoro.exe
+SHA256: C696A58C678CF2429233A2BFD2B4C7ED680188A9B5E85D59C113B13EB3681357
+BYTES : 66001079
+[PASS] publish dir contains exactly one file :: 1 file(s): FluentPomodoro.exe
+[PASS] no FluentPomodoro process before launch :: count=0
+[PASS] process alive after launch :: pid=7672 HasExited=False
+[PASS] owns a visible top-level window :: hwnd=4392726
+[PASS] window opens at 640x780 :: 640x780 @ (640,126)
+[PASS] title looks like <time> · 专注 · 微软风格番茄钟 :: title='25:00 · 专注 · 微软风格番茄钟'
+virtual desktop = 1920x1080 @ (0,0)  monitor count=1
+PrintWindow bitmap = 640x780
+printwindow full-window stats: modal=239,244,249 distinct=48 lum=0.952
+[PASS] PrintWindow capture is not blank/dummy :: distinct colours=48, modal=239,244,249
+[PASS] Ctrl+I opens the 专注统计 window :: stats hwnd=3475108
+visible top-level windows owned by pid:
+   hwnd=3475108     1000x680   @(460,176)  title='专注统计'  class='HwndWrapper[FluentPomodoro;;bce67c77-00ce-47e8-b887-f2ee35650b13]'
+   hwnd=4392726      640x780   @(640,126)  title='25:00 · 专注 · 微软风格番茄钟'  class='HwndWrapper[FluentPomodoro;;00d76fbf-b2fd-4b59-9033-41564a1a99fd]'
+[PASS] main window still largest visible window :: main=4392726
+[PASS] exits cleanly via Ctrl+Shift+Q :: HasExited=True
+[PASS] no leftover FluentPomodoro process :: count=0
+==============================================================================
+TOTAL 11 / 11 passed, 0 failed
+==============================================================================

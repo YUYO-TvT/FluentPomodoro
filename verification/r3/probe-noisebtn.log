@@ -1,0 +1,40 @@
+[idle] window @(640,126) 640x780; BtnNoise rect={"Y":131,"W":46,"H":32,"X":1049}
+   distinct colours=47; top:
+      243,243,243      x1375
+      166,149,166      x6
+      243,243,241      x6
+      241,243,243      x3
+      218,243,243      x3
+      229,243,243      x3
+      234,243,230      x2
+      164,139,157      x2
+   TxtNoiseInfo = '<not found>'
+[after BtnNoise click (should be playing)] window @(640,126) 640x780; BtnNoise rect={"Y":131,"W":46,"H":32,"X":1049}
+   distinct colours=47; top:
+      243,243,243      x1375
+      170,169,221      x6
+      243,243,242      x6
+      232,243,243      x3
+      222,243,243      x3
+      241,243,243      x3
+      229,224,236      x2
+      167,164,220      x2
+   TxtNoiseInfo = '<not found>'
+[after second click (should be stopped)] window @(640,126) 640x780; BtnNoise rect={"Y":131,"W":46,"H":32,"X":1049}
+   distinct colours=47; top:
+      243,243,243      x1375
+      166,149,166      x6
+      243,243,241      x6
+      241,243,243      x3
+      218,243,243      x3
+      229,243,243      x3
+      234,243,230      x2
+      164,139,157      x2
+   TxtNoiseInfo = '<not found>'
+[BtnStats reference] rect={"Y":131,"W":46,"H":32,"X":1003} distinct=11; top:
+      243,243,243      x1382
+      27,27,27         x40
+      0,120,212        x38
+      119,119,119      x2
+      68,68,68         x2
+      91,91,91         x2

@@ -1,0 +1,18 @@
+=== Part 1: clock diff from real screen captures (CopyFromScreen) ===
+[PASS] clock is present with ShowClock=true :: TxtClock='00:28:28' rect={"Y":581,"H":43,"W":119,"X":901}
+[PASS] the timer is not running (title shows the full 25:00) :: title='25:00 · 专注 · 微软风格番茄钟'
+screen captures: diff pixels=447 bbox=(345,467)-(378,489); clock region (window-relative) = (259,453)-(382,500)
+[PASS] screen-capture pair with the clock ON differs :: diff pixels=447
+[PASS] screen captures: every changed pixel lies inside the clock region :: changed bbox=(345,467)-(378,489) inside allowed=(259,453)-(382,500)
+[PASS] the clock is gone from the UI tree after disabling :: TxtClock rect=
+[PASS] screen-capture pair with the clock OFF is pixel-identical :: diff pixels=0 bbox=(2147483647,2147483647)-(-1,-1)
+
+=== Part 2: probe BackgroundOpacity=0.42 (not a multiple of the slider tick 0.05) ===
+file before launch: BackgroundOpacity=0.42
+in-session: LblBgOpacity='42%'  SldBgOpacity=0.42
+file after exit : BackgroundOpacity=0.42
+[PASS] a hand-written non-tick opacity is not silently changed on a load/exit round-trip :: 0.42 -> slider shows '42%' (value 0.42) -> file 0.42
+[PASS] the opacity label is close to the requested value :: label='42%'
+==============================================================================
+TOTAL 8 / 8 passed, 0 failed
+==============================================================================

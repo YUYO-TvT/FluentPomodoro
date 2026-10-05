@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+
+    <AssemblyName>FluentPomodoro</AssemblyName>
+    <RootNamespace>FluentPomodoro</RootNamespace>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Assets\app.ico</ApplicationIcon>
+
+    <Product>微软风格番茄钟</Product>
+    <AssemblyTitle>Fluent Pomodoro 番茄钟</AssemblyTitle>
+    <Description>Windows 11 微软 Fluent 风格番茄钟，支持强制大屏（全屏 / 跨屏巨幕）</Description>
+    <Company>Fluent Pomodoro</Company>
+    <Version>1.0.0</Version>
+    <FileVersion>1.0.0.0</FileVersion>
+    <Copyright>© 2026 Fluent Pomodoro</Copyright>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+
+  
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <SelfContained>true</SelfContained>
+    <PublishSingleFile>true</PublishSingleFile>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <PublishTrimmed>false</PublishTrimmed>
+    <PublishReadyToRun>false</PublishReadyToRun>
+    <DebugType>embedded</DebugType>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CA1416</NoWarn>
+    <InvariantGlobalization>false</InvariantGlobalization>
+  </PropertyGroup>
+
+</Project>

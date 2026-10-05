@@ -1,0 +1,160 @@
+<Window x:Class="FluentPomodoro.StatsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:FluentPomodoro.Controls"
+        Title="专注统计"
+        Width="1000" Height="680" MinWidth="820" MinHeight="560"
+        WindowStartupLocation="CenterOwner"
+        WindowStyle="None" ResizeMode="CanResize" AllowsTransparency="False"
+        Background="{DynamicResource WindowBackdropBrush}"
+        FontFamily="{DynamicResource AppFontFamily}"
+        FontSize="14"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="ClearType"
+        UseLayoutRounding="True"
+        SnapsToDevicePixels="True"
+        PreviewKeyDown="OnPreviewKeyDown"
+        Activated="OnWindowActivated"
+        Closing="OnWindowClosing">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="44" ResizeBorderThickness="6" CornerRadius="8"
+                      GlassFrameThickness="0" UseAeroCaptionButtons="False" />
+    </WindowChrome.WindowChrome>
+
+    <Border x:Name="RootBorder" CornerRadius="8" BorderThickness="1"
+            BorderBrush="{DynamicResource StrokeBrush}"
+            Background="{DynamicResource WindowOverlayBrush}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!-- 标题栏 -->
+            <Grid Grid.Row="0" Height="44" Background="Transparent">
+                <StackPanel Orientation="Horizontal" Margin="16,0,0,0" VerticalAlignment="Center">
+                    <TextBlock Text="&#xE9D2;" FontFamily="{DynamicResource AppIconFontFamily}" FontSize="14"
+                               Foreground="{DynamicResource AccentBrush}" VerticalAlignment="Center" />
+                    <TextBlock Text="专注统计" FontSize="13" Margin="9,0,0,0" VerticalAlignment="Center"
+                               Foreground="{DynamicResource TextSecondaryBrush}" />
+                    <TextBlock x:Name="TxtRange" FontSize="12.5" Margin="10,0,0,0" VerticalAlignment="Center"
+                               Foreground="{DynamicResource TextTertiaryBrush}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center"
+                            WindowChrome.IsHitTestVisibleInChrome="True">
+                    <Button Style="{StaticResource SubtleButton}" Content="导出 CSV" Padding="12,6" Margin="0,0,6,0"
+                            Focusable="False" Click="OnExportCsv" />
+                    <Button Style="{StaticResource TitleBarButton}" Content="&#xE8BB;" ToolTip="关闭 (Esc)"
+                            Click="OnCloseClick" />
+                </StackPanel>
+            </Grid>
+
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="20,4,20,20">
+                <StackPanel>
+
+                    <!-- 汇总卡片 -->
+                    <WrapPanel Margin="0,0,0,16">
+                        <Border Style="{StaticResource FluentCard}" Width="152" Margin="0,0,12,12">
+                            <StackPanel>
+                                <TextBlock Style="{StaticResource CaptionText}" Text="今日" />
+                                <TextBlock x:Name="ValToday" FontSize="20" FontWeight="SemiBold" Margin="0,4,0,0"
+                                           Foreground="{DynamicResource TextPrimaryBrush}" />
+                                <TextBlock x:Name="SubToday" Style="{StaticResource CaptionText}" />
+                            </StackPanel>
+                        </Border>
+                        <Border Style="{StaticResource FluentCard}" Width="152" Margin="0,0,12,12">
+                            <StackPanel>
+                                <TextBlock Style="{StaticResource CaptionText}" Text="本周" />
+                                <TextBlock x:Name="ValWeek" FontSize="20" FontWeight="SemiBold" Margin="0,4,0,0"
+                                           Foreground="{DynamicResource TextPrimaryBrush}" />
+                                <TextBlock x:Name="SubWeek" Style="{StaticResource CaptionText}" />
+                            </StackPanel>
+                        </Border>
+                        <Border Style="{StaticResource FluentCard}" Width="152" Margin="0,0,12,12">
+                            <StackPanel>
+                                <TextBlock Style="{StaticResource CaptionText}" Text="本月" />
+                                <TextBlock x:Name="ValMonth" FontSize="20" FontWeight="SemiBold" Margin="0,4,0,0"
+                                           Foreground="{DynamicResource TextPrimaryBrush}" />
+                                <TextBlock x:Name="SubMonth" Style="{StaticResource CaptionText}" />
+                            </StackPanel>
+                        </Border>
+                        <Border Style="{StaticResource FluentCard}" Width="176" Margin="0,0,12,12">
+                            <StackPanel>
+                                <TextBlock Style="{StaticResource CaptionText}" Text="累计专注" />
+                                <TextBlock x:Name="ValTotal" FontSize="20" FontWeight="SemiBold" Margin="0,4,0,0"
+                                           Foreground="{DynamicResource TextPrimaryBrush}" />
+                                <TextBlock x:Name="SubTotal" Style="{StaticResource CaptionText}" />
+                            </StackPanel>
+                        </Border>
+                        <Border Style="{StaticResource FluentCard}" Width="152" Margin="0,0,12,12">
+                            <StackPanel>
+                                <TextBlock Style="{StaticResource CaptionText}" Text="连续专注" />
+                                <TextBlock x:Name="ValStreak" FontSize="20" FontWeight="SemiBold" Margin="0,4,0,0"
+                                           Foreground="{DynamicResource TextPrimaryBrush}" />
+                                <TextBlock Style="{StaticResource CaptionText}" Text="天（含今天）" />
+                            </StackPanel>
+                        </Border>
+                        <Border Style="{StaticResource FluentCard}" Width="200" Margin="0,0,12,12">
+                            <StackPanel>
+                                <TextBlock Style="{StaticResource CaptionText}" Text="最佳一天" />
+                                <TextBlock x:Name="ValBest" FontSize="20" FontWeight="SemiBold" Margin="0,4,0,0"
+                                           Foreground="{DynamicResource TextPrimaryBrush}" />
+                                <TextBlock x:Name="SubBest" Style="{StaticResource CaptionText}" />
+                            </StackPanel>
+                        </Border>
+                    </WrapPanel>
+
+                    <!-- 绿点矩阵 -->
+                    <Border Style="{StaticResource FluentCard}" Padding="20,16">
+                        <StackPanel>
+                            <TextBlock Text="每日专注时间" FontSize="15" FontWeight="SemiBold"
+                                       Foreground="{DynamicResource TextPrimaryBrush}" />
+                            <TextBlock Style="{StaticResource CaptionText}" Margin="0,4,0,14" TextWrapping="Wrap"
+                                       Text="GitHub 贡献图样式：每一格代表一天，当天专注时间越长，格子颜色越深。把鼠标移到格子上可看当天明细。" />
+                            <controls:ContributionGraph x:Name="Heat" HorizontalAlignment="Left"
+                                                        DayHovered="OnHeatHovered" DayUnhovered="OnHeatUnhovered" />
+                            <StackPanel Orientation="Horizontal" Margin="0,16,0,0" VerticalAlignment="Center">
+                                <TextBlock Style="{StaticResource CaptionText}" Text="少" Margin="0,0,6,0"
+                                           VerticalAlignment="Center" />
+                                <Border Width="12" Height="12" CornerRadius="3" Margin="0,0,3,0"
+                                        Background="{DynamicResource Heat0Brush}" />
+                                <Border Width="12" Height="12" CornerRadius="3" Margin="0,0,3,0"
+                                        Background="{DynamicResource Heat1Brush}" />
+                                <Border Width="12" Height="12" CornerRadius="3" Margin="0,0,3,0"
+                                        Background="{DynamicResource Heat2Brush}" />
+                                <Border Width="12" Height="12" CornerRadius="3" Margin="0,0,3,0"
+                                        Background="{DynamicResource Heat3Brush}" />
+                                <Border Width="12" Height="12" CornerRadius="3" Margin="0,0,3,0"
+                                        Background="{DynamicResource Heat4Brush}" />
+                                <Border Width="12" Height="12" CornerRadius="3" Margin="0,0,3,0"
+                                        Background="{DynamicResource Heat5Brush}" />
+                                <TextBlock Style="{StaticResource CaptionText}" Text="多" Margin="6,0,18,0"
+                                           VerticalAlignment="Center" />
+                                <TextBlock Style="{StaticResource CaptionText}" VerticalAlignment="Center"
+                                           Text="0 · &lt;25分 · 25–49分 · 50–99分 · 100–199分 · ≥200分" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <TextBlock x:Name="TxtSummaryLine" Style="{StaticResource CaptionText}" Margin="4,14,0,0"
+                               TextWrapping="Wrap" />
+                </StackPanel>
+            </ScrollViewer>
+
+            <!-- 悬停提示 -->
+            <Popup x:Name="HeatTip" Placement="Mouse" AllowsTransparency="True" StaysOpen="True"
+                   IsHitTestVisible="False">
+                <Border CornerRadius="6" Padding="10,7" Margin="0,0,16,16"
+                        Background="{DynamicResource SurfaceBrush}"
+                        BorderBrush="{DynamicResource StrokeBrush}" BorderThickness="1">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="14" ShadowDepth="2" Opacity="0.3" Color="Black" />
+                    </Border.Effect>
+                    <TextBlock x:Name="HeatTipText" FontSize="12.5"
+                               Foreground="{DynamicResource TextPrimaryBrush}" />
+                </Border>
+            </Popup>
+        </Grid>
+    </Border>
+</Window>
